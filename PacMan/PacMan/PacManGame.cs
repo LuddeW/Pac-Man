@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using PacMan.Screens;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,8 +11,12 @@ namespace PacMan
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
-        public enum GameState { StartMenu}
+        public enum GameState { StartMenu, HighScore}
         GameState CurrentState = GameState.StartMenu;
+
+        StartMenu StartMenu;
+
+        SpriteFont menuFont;
 
         public PacManGame()
         {
@@ -22,8 +27,10 @@ namespace PacMan
         
         protected override void Initialize()
         {
-            
-
+            IsMouseVisible = true;
+            graphics.PreferredBackBufferWidth = 500;
+            graphics.PreferredBackBufferHeight = 515;
+            graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -32,11 +39,22 @@ namespace PacMan
         {
             
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            LoadFonts();
+            CreatScreens();
+            
             
         }
 
-        
+        protected void CreatScreens()
+        {
+            StartMenu = new StartMenu(this, menuFont);
+        }
+
+        protected void LoadFonts()
+        {
+            menuFont = Content.Load<SpriteFont>(@"MenuFont");
+        }
+ 
         protected override void UnloadContent()
         {
             
@@ -47,10 +65,16 @@ namespace PacMan
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
             switch (CurrentState)
             {
                 case GameState.StartMenu:
-                break;
+
+                    break;
+
+                case GameState.HighScore:
+
+                    break;
             }
 
             
@@ -61,11 +85,15 @@ namespace PacMan
         
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
             switch (CurrentState)
             {
                 case GameState.StartMenu:
+                    
+                    break;
+                case GameState.HighScore:
+
                     break;
             }
             spriteBatch.End();

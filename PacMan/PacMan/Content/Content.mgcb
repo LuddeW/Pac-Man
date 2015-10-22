@@ -1,8 +1,8 @@
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:bin/Windows
-/intermediateDir:obj/Windows
+/outputDir:bin
+/intermediateDir:obj
 /platform:Windows
 /config:
 /profile:Reach
@@ -12,4 +12,21 @@
 
 
 #---------------------------------- Content ---------------------------------#
+
+#begin menudoge75x75.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:TextureFormat=Color
+/build:menudoge75x75.png
+
+#begin MenuFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:MenuFont.spritefont
 
