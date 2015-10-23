@@ -18,12 +18,6 @@ namespace PacMan.Screens
         protected enum ButtonState { Start, LevelEditor, Highscore}
         ButtonState CurrentState = ButtonState.Start;
 
-        string start = "Start";
-        string levelEditor = "Level-Editor";
-        string highscore = "Highscore";
-
-
-
         public StartMenu(PacManGame Game, SpriteFont MenuFont)
         {
             this.Game = Game;

@@ -11,10 +11,11 @@ namespace PacMan
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
-        public enum GameState { StartMenu, HighScore}
-        GameState CurrentState = GameState.StartMenu;
+        public enum GameState { StartMenu, HighScore, GameScreen}
+        GameState CurrentState = GameState.GameScreen;
 
-        StartMenu StartMenu;
+        StartMenu startMenu;
+        GameScreen gameScreen;
 
         SpriteFont menuFont;
 
@@ -41,13 +42,15 @@ namespace PacMan
             spriteBatch = new SpriteBatch(GraphicsDevice);
             LoadFonts();
             CreatScreens();
+            gameScreen.LoadPictures();
             
             
         }
 
         protected void CreatScreens()
         {
-            StartMenu = new StartMenu(this, menuFont);
+            startMenu = new StartMenu(this, menuFont);
+            gameScreen = new GameScreen(this);
         }
 
         protected void LoadFonts()
@@ -75,6 +78,10 @@ namespace PacMan
                 case GameState.HighScore:
 
                     break;
+
+                case GameState.GameScreen:
+                    gameScreen.Update(gameTime);
+                    break;
             }
 
             
@@ -92,8 +99,13 @@ namespace PacMan
                 case GameState.StartMenu:
                     
                     break;
+
                 case GameState.HighScore:
 
+                    break;
+
+                case GameState.GameScreen:
+                    gameScreen.Draw(spriteBatch);
                     break;
             }
             spriteBatch.End();
