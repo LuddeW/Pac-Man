@@ -11,7 +11,7 @@ namespace PacMan
 
         public Clock()
         {
-            timer = 0;
+            timer = 0;            
         }
 
         public void AddTime(float time)

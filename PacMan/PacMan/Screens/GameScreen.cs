@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,11 @@ namespace PacMan.Screens
 
         Clock clock = new Clock();
         Texture2D pacSprite;
+        Vector2 pos = new Vector2(0, 0);
 
         int pacAnimation = 0;
+
+        SpriteEffects pacEffects;
 
         public GameScreen(PacManGame game)
         {
@@ -28,12 +32,28 @@ namespace PacMan.Screens
 
         public void Update(GameTime gameTime)
         {
+            PacMovement();
             clock.AddTime((float)gameTime.ElapsedGameTime.TotalSeconds);
+        }
+
+        private void PacMovement()
+        {
+            pacEffects = SpriteEffects.None;
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                pacEffects = SpriteEffects.None;
+                pos.X += 1f;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                pacEffects = SpriteEffects.FlipHorizontally;
+                pos.X -= 1f;
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(pacSprite, new Vector2(0, 0), new Rectangle((pacSprite.Width / 4) * PacAnimation(), 0, pacSprite.Width / 4, pacSprite.Height), Color.White);
+            spriteBatch.Draw(pacSprite, pos, new Rectangle((pacSprite.Width / 4) * PacAnimation(), 0, pacSprite.Width / 4, pacSprite.Height), Color.White);
         }
 
         private int PacAnimation()

@@ -43,8 +43,6 @@ namespace PacMan
             LoadFonts();
             CreatScreens();
             gameScreen.LoadPictures();
-            
-            
         }
 
         protected void CreatScreens()
