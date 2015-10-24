@@ -16,6 +16,7 @@ namespace PacMan.Screens
         Texture2D pacSprite;
 
         Vector2 pos = new Vector2(20, 20);
+        Rectangle pacRect;
 
         int pacAnimation = 0;
         float scale = 1f;
@@ -80,7 +81,8 @@ namespace PacMan.Screens
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(pacSprite, pos, new Rectangle((pacSprite.Width / 4) * PacAnimation(), 0, pacSprite.Width / 4, pacSprite.Height), Color.White, rotation, new Vector2(20, 20), scale, pacEffects, 1f);
+            pacRect = new Rectangle((pacSprite.Width / 4) * PacAnimation(), 0, pacSprite.Width / 4, pacSprite.Height);
+            spriteBatch.Draw(pacSprite, pos, pacRect, Color.White, rotation, new Vector2(20, 20), scale, pacEffects, 1f);
         }
 
         private int PacAnimation()
