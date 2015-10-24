@@ -14,11 +14,15 @@ namespace PacMan.Screens
 
         Clock clock = new Clock();
         Texture2D pacSprite;
-        Vector2 pos = new Vector2(0, 0);
+
+        Vector2 pos = new Vector2(20, 20);
 
         int pacAnimation = 0;
+        float scale = 1f;
+        float rotation = 0;
+        bool movement = false;
 
-        SpriteEffects pacEffects;
+        SpriteEffects pacEffects = SpriteEffects.None;
 
         public GameScreen(PacManGame game)
         {
@@ -38,37 +42,61 @@ namespace PacMan.Screens
 
         private void PacMovement()
         {
-            pacEffects = SpriteEffects.None;
+            
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 pacEffects = SpriteEffects.None;
                 pos.X += 1f;
+                rotation = MathHelper.ToRadians(0);
+                movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 pacEffects = SpriteEffects.FlipHorizontally;
                 pos.X -= 1f;
+                rotation = MathHelper.ToRadians(0);
+                movement = true;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                pacEffects = SpriteEffects.None;
+                pos.Y -= 1f;
+                rotation = MathHelper.ToRadians(-90);
+                movement = true;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                pacEffects = SpriteEffects.FlipHorizontally;
+                pos.Y += 1f;
+                rotation = MathHelper.ToRadians(-90);
+                movement = true;
+            }
+            else
+            {
+                movement = false;
+                pacAnimation = 1;
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(pacSprite, pos, new Rectangle((pacSprite.Width / 4) * PacAnimation(), 0, pacSprite.Width / 4, pacSprite.Height), Color.White);
+            spriteBatch.Draw(pacSprite, pos, new Rectangle((pacSprite.Width / 4) * PacAnimation(), 0, pacSprite.Width / 4, pacSprite.Height), Color.White, rotation, new Vector2(20, 20), scale, pacEffects, 1f);
         }
 
         private int PacAnimation()
         {
-            
-            if (clock.Timer() > 0.2f)
+            if (movement)
             {
-                pacAnimation++;
-                clock.ResetTime();
-                if (pacAnimation > 3)
+                if (clock.Timer() > 0.2f)
                 {
-                    pacAnimation = 0;
+                    pacAnimation++;
+                    clock.ResetTime();
+                    if (pacAnimation > 3)
+                    {
+                        pacAnimation = 0;
+                    }
                 }
             }
-
             return pacAnimation;
         }
     }

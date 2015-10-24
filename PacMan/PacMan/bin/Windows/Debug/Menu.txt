@@ -1,0 +1,5 @@
+Start
+
+Highscore
+
+Level-Editor
