@@ -48,34 +48,34 @@ namespace PacMan.Screens
 
         private void PacMovement()
         {
-            if (!Collision())
-            {
+            Vector2 newPacPos = new Vector2(pos.X, pos.Y);
+            float newRot = rotation;
                 if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
                     pacEffects = SpriteEffects.None;
-                    pos.X += 1f;
-                    rotation = MathHelper.ToRadians(0);
+                    newPacPos.X += 1;
+                    newRot = MathHelper.ToRadians(0);
                     movement = true;
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.Left))
                 {
                     pacEffects = SpriteEffects.FlipHorizontally;
-                    pos.X -= 1f;
-                    rotation = MathHelper.ToRadians(0);
+                    newPacPos.X -= 1f;
+                    newRot = MathHelper.ToRadians(0);
                     movement = true;
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.Up))
                 {
                     pacEffects = SpriteEffects.None;
-                    pos.Y -= 1f;
-                    rotation = MathHelper.ToRadians(-90);
+                    newPacPos.Y -= 1f;
+                    newRot = MathHelper.ToRadians(-90);
                     movement = true;
                 }
                 else if (Keyboard.GetState().IsKeyDown(Keys.Down))
                 {
                     pacEffects = SpriteEffects.FlipHorizontally;
-                    pos.Y += 1f;
-                    rotation = MathHelper.ToRadians(-90);
+                    newPacPos.Y += 1f;
+                    newRot = MathHelper.ToRadians(-90);
                     movement = true;
                 }
                 else
@@ -83,6 +83,14 @@ namespace PacMan.Screens
                     movement = false;
                     pacAnimation = 1;
                 }
+            if (!Collision(newPacPos))
+            {
+                pos = newPacPos;
+                rotation = newRot;
+            }
+            else
+            {
+
             }
         }
 
@@ -111,9 +119,10 @@ namespace PacMan.Screens
             }
             return pacAnimation;
         }
-        private bool Collision()
+        private bool Collision(Vector2 newPacPos)
         {
-            if (wallRect.Intersects(pacPos))
+            Rectangle temp = new Rectangle((int)newPacPos.X - 20, (int)newPacPos.Y - 20, 40, 40);
+            if (wallRect.Intersects(temp))
             {
                 return true;
             }
