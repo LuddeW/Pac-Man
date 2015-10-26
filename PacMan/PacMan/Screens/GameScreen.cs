@@ -14,13 +14,16 @@ namespace PacMan.Screens
 
         Clock clock = new Clock();
         Texture2D pacSprite;
+        Texture2D wall;
 
         Vector2 pos = new Vector2(20, 20);
-        Rectangle pacRect;
+        Rectangle pacSrcRect;
+        Rectangle pacPos;
+        Rectangle wallRect;
 
         int pacAnimation = 0;
-        float scale = 1f;
         float rotation = 0;
+        float scale = 1f;
         bool movement = false;
 
         SpriteEffects pacEffects = SpriteEffects.None;
@@ -33,6 +36,8 @@ namespace PacMan.Screens
         public void LoadPictures()
         {
             pacSprite = game.Content.Load<Texture2D>(@"pacman");
+            wall = game.Content.Load<Texture2D>(@"Wall-test");
+            
         }
 
         public void Update(GameTime gameTime)
@@ -43,46 +48,51 @@ namespace PacMan.Screens
 
         private void PacMovement()
         {
-            
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            if (!Collision())
             {
-                pacEffects = SpriteEffects.None;
-                pos.X += 1f;
-                rotation = MathHelper.ToRadians(0);
-                movement = true;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                pacEffects = SpriteEffects.FlipHorizontally;
-                pos.X -= 1f;
-                rotation = MathHelper.ToRadians(0);
-                movement = true;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                pacEffects = SpriteEffects.None;
-                pos.Y -= 1f;
-                rotation = MathHelper.ToRadians(-90);
-                movement = true;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                pacEffects = SpriteEffects.FlipHorizontally;
-                pos.Y += 1f;
-                rotation = MathHelper.ToRadians(-90);
-                movement = true;
-            }
-            else
-            {
-                movement = false;
-                pacAnimation = 1;
+                if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                {
+                    pacEffects = SpriteEffects.None;
+                    pos.X += 1f;
+                    rotation = MathHelper.ToRadians(0);
+                    movement = true;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                {
+                    pacEffects = SpriteEffects.FlipHorizontally;
+                    pos.X -= 1f;
+                    rotation = MathHelper.ToRadians(0);
+                    movement = true;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                {
+                    pacEffects = SpriteEffects.None;
+                    pos.Y -= 1f;
+                    rotation = MathHelper.ToRadians(-90);
+                    movement = true;
+                }
+                else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                {
+                    pacEffects = SpriteEffects.FlipHorizontally;
+                    pos.Y += 1f;
+                    rotation = MathHelper.ToRadians(-90);
+                    movement = true;
+                }
+                else
+                {
+                    movement = false;
+                    pacAnimation = 1;
+                }
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            pacRect = new Rectangle((pacSprite.Width / 4) * PacAnimation(), 0, pacSprite.Width / 4, pacSprite.Height);
-            spriteBatch.Draw(pacSprite, pos, pacRect, Color.White, rotation, new Vector2(20, 20), scale, pacEffects, 1f);
+            pacSrcRect = new Rectangle((pacSprite.Width / 4) * PacAnimation(), 0, pacSprite.Width / 4, pacSprite.Height);
+            pacPos = new Rectangle((int)pos.X - 20, (int)pos.Y - 20, 40, 40);
+            wallRect = new Rectangle(100, 100, wall.Width * 4, wall.Height * 4);
+            spriteBatch.Draw(pacSprite, pos, pacSrcRect, Color.White, rotation, new Vector2(20, 20), scale, pacEffects, 1f);
+            spriteBatch.Draw(wall, wallRect, Color.White);
         }
 
         private int PacAnimation()
@@ -100,6 +110,17 @@ namespace PacMan.Screens
                 }
             }
             return pacAnimation;
+        }
+        private bool Collision()
+        {
+            if (wallRect.Intersects(pacPos))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

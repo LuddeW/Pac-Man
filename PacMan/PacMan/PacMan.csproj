@@ -55,6 +55,7 @@
   <ItemGroup>
     <Content Include="Content\menudoge75x75.png" />
     <Content Include="Content\pacman.png" />
+    <Content Include="Content\Wall-test.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
