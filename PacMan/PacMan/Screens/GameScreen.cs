@@ -16,7 +16,7 @@ namespace PacMan.Screens
         Texture2D pacSprite;
         Texture2D wall;
 
-        Vector2 pos = new Vector2(20, 20);
+        Vector2 pos = new Vector2(60, 60);
         Rectangle pacSrcRect;
         Rectangle pacPos;
         Rectangle wallRect;
