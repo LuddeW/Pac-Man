@@ -9,7 +9,7 @@ namespace PacMan.GameObjects
 {
     class GameObject
     {        
-        Texture2D texture;
+        public Texture2D texture;
         public Vector2 pos;
 
         public GameObject(Texture2D texture, Vector2 pos)
@@ -17,7 +17,7 @@ namespace PacMan.GameObjects
             this.texture = texture;
             this.pos = pos;
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, pos, Color.White);
         }
