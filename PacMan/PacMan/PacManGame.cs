@@ -13,7 +13,7 @@ namespace PacMan
         
         public enum GameState { StartMenu, HighScore, GameScreen}
         GameState CurrentState = GameState.GameScreen;
-
+        
         StartMenu startMenu;
         GameScreen gameScreen;
 

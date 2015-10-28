@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PacMan.GameObjects.MovingObjects
+namespace PacMan.GameObjects
 {
     class Ghosts
     {

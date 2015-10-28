@@ -4,9 +4,9 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/Content/menudoge75x75.png</File>
-    <File>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/Content/MenuFont.spritefont</File>
-    <File>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/Content/pacman.png</File>
-    <File>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/Content/Wall-test.png</File>
+    <File>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/GameObjects/StillObjects/Content/menudoge75x75.png</File>
+    <File>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/GameObjects/StillObjects/Content/MenuFont.spritefont</File>
+    <File>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/GameObjects/StillObjects/Content/pacman.png</File>
+    <File>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/GameObjects/StillObjects/Content/Wall-test.png</File>
   </SourceFiles>
 </SourceFileCollection>

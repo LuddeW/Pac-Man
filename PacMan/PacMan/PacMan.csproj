@@ -39,9 +39,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Clock.cs" />
-    <Compile Include="GameObjects\GameObjects.cs" />
-    <Compile Include="GameObjects\MovingObjects\Ghosts.cs" />
-    <Compile Include="GameObjects\MovingObjects\PacMan.cs" />
+    <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\Ghosts.cs" />
+    <Compile Include="GameObjects\PacMans.cs" />
     <Compile Include="GameObjects\StillObjects\Floor.cs" />
     <Compile Include="GameObjects\StillObjects\PointFloor.cs" />
     <Compile Include="GameObjects\StillObjects\PowerUps.cs" />
@@ -60,16 +60,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\menudoge75x75.png" />
-    <Content Include="Content\pacman.png" />
-    <Content Include="Content\Wall-test.png" />
+    <Content Include="GameObjects\StillObjects\Content\menudoge75x75.png" />
+    <Content Include="GameObjects\StillObjects\Content\pacman.png" />
+    <Content Include="GameObjects\StillObjects\Content\Wall-test.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
+    <MonoGameContentReference Include="GameObjects\StillObjects\Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\MenuFont.spritefont" />
+    <None Include="GameObjects\StillObjects\Content\MenuFont.spritefont" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
