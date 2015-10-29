@@ -21,17 +21,10 @@ namespace PacMan.Screens
         Rectangle pacSrcRect;
         Rectangle pacPos;
         Rectangle wallRect;
-        PacMans pacman;
-        
-        
-        
+        PacMans pacman;       
 
         int pacAnimation = 0;
-        float rotation = 0;
-        float scale = 1f;
         bool movement = false;
-
-        SpriteEffects pacEffects = SpriteEffects.None;
 
         public GameScreen(PacManGame game)
         {
@@ -48,8 +41,6 @@ namespace PacMan.Screens
 
         public void Update(GameTime gameTime)
         {
-            //PacMovement();
-            //clock.AddTime((float)gameTime.ElapsedGameTime.TotalSeconds);
             pacman.Update();
         }
 
