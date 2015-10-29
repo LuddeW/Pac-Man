@@ -29,8 +29,8 @@ namespace PacMan
         protected override void Initialize()
         {
             IsMouseVisible = true;
-            graphics.PreferredBackBufferWidth = 500;
-            graphics.PreferredBackBufferHeight = 515;
+            graphics.PreferredBackBufferWidth = 600;
+            graphics.PreferredBackBufferHeight = 615;
             graphics.ApplyChanges();
             base.Initialize();
         }
@@ -42,7 +42,7 @@ namespace PacMan
             spriteBatch = new SpriteBatch(GraphicsDevice);
             LoadFonts();
             CreatScreens();
-            gameScreen.LoadPictures();
+            gameScreen.Load();
         }
 
         protected void CreatScreens()

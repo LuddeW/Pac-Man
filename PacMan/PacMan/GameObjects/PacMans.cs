@@ -14,7 +14,7 @@ namespace PacMan.GameObjects
         //Vector2 pos;
         Rectangle srcRect;
         float rotation = 0f;
-        float scale = 0.5f;
+        float scale = 1f;
         int pacAnimation = 1;
         SpriteEffects texEffects;
         bool movement = false;

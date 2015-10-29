@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PacMan.GameObjects;
+using PacMan.GameObjects.StillObjects;
+using System.IO;
 
 namespace PacMan.Screens
 {
@@ -21,7 +23,9 @@ namespace PacMan.Screens
         Rectangle pacSrcRect;
         Rectangle pacPos;
         Rectangle wallRect;
-        PacMans pacman;       
+        PacMans pacman;
+        List<string> strings = new List<string>();
+        List<Walls> walls = new List<Walls>();     
 
         int pacAnimation = 0;
         bool movement = false;
@@ -31,12 +35,25 @@ namespace PacMan.Screens
             this.game = game;
         }
 
-        public void LoadPictures()
+        public void Load()
         {
             pacSprite = game.Content.Load<Texture2D>(@"pacman");
             wall = game.Content.Load<Texture2D>(@"Wall-test");
-            pacman = new PacMans(pacSprite, new Vector2(120, 120));
-            
+            pacman = new PacMans(pacSprite, pos);
+            StreamReader sr = new StreamReader(@"testlevel.txt");
+            while (!sr.EndOfStream)
+            {
+                strings.Add(sr.ReadLine());
+            }
+            //for (int i = 0; i < strings.Count; i++)
+            //{
+            //    for (int k = 0; k < strings[i].Length; k++)
+            //    {
+            //        walls = new Walls(wall, new Vector2(40* i, 40* k));
+            //    }
+                
+            //}
+
         }
 
         public void Update(GameTime gameTime)
@@ -100,6 +117,16 @@ namespace PacMan.Screens
             //spriteBatch.Draw(pacSprite, pos, pacSrcRect, Color.White, rotation, new Vector2(20, 20), scale, pacEffects, 1f);
             //spriteBatch.Draw(wall, wallRect, Color.White);
             pacman.Draw(spriteBatch);
+            for (int i = 0; i < strings.Count; i++)
+            {
+                for (int k = 0; k < strings[i].Length; k++)
+                {
+                    if (strings[i][k] == 'W')
+                    {
+                        spriteBatch.Draw(wall, new Rectangle(40 * i, 40 * k, 40, 40), Color.White);
+                    }
+                }
+            }
         }
 
         private int PacAnimation()
