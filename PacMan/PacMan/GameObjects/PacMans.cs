@@ -15,7 +15,7 @@ namespace PacMan.GameObjects
         Rectangle srcRect;
         float rotation = 0f;
         float scale = 1f;
-        int pacAnimation = 0;
+        int pacAnimation = 1;
         SpriteEffects texEffects;
         bool movement = false;
         Clock clock;
@@ -24,7 +24,6 @@ namespace PacMan.GameObjects
         {
             this.pos = pos;
             this.texture = texture;
-            srcRect = new Rectangle((texture.Width / 4) * PacAnimation(), 0, texture.Width / 4, texture.Height);
             texEffects = SpriteEffects.None;
             clock = new Clock();
         }
@@ -33,6 +32,10 @@ namespace PacMan.GameObjects
         public void Update()
         {
             PacMovement();
+            clock.AddTime(0.03F);
+
+            srcRect = new Rectangle((texture.Width / 4) * PacAnimation(), 0, texture.Width / 4, texture.Height);
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -92,6 +95,7 @@ namespace PacMan.GameObjects
                     }
                 }
             }
+            
             return pacAnimation;
         }
     }

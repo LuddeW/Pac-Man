@@ -49,7 +49,7 @@ namespace PacMan.Screens
         public void Update(GameTime gameTime)
         {
             //PacMovement();
-            clock.AddTime((float)gameTime.ElapsedGameTime.TotalSeconds);
+            //clock.AddTime((float)gameTime.ElapsedGameTime.TotalSeconds);
             pacman.Update();
         }
 
