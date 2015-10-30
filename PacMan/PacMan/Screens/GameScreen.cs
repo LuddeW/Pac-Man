@@ -76,7 +76,7 @@ namespace PacMan.Screens
 
         public void Update(GameTime gameTime)
         {
-            pacman.Update();
+            pacman.Update(walls);
         }
 
         //private void PacMovement()
@@ -135,6 +135,11 @@ namespace PacMan.Screens
             //spriteBatch.Draw(pacSprite, pos, pacSrcRect, Color.White, rotation, new Vector2(20, 20), scale, pacEffects, 1f);
             //spriteBatch.Draw(wall, wallRect, Color.White);
             pacman.Draw(spriteBatch);
+            DrawWalls(spriteBatch);
+        }
+
+        private void DrawWalls(SpriteBatch spriteBatch)
+        {
             foreach (Walls wall in walls)
             {
                 wall.Draw(spriteBatch);

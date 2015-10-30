@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using PacMan.GameObjects.StillObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,9 @@ namespace PacMan.GameObjects
         }
 
         // Override?
-        public void Update()
+        public void Update(List<Walls> walls)
         {
-            PacMovement();
+            PacMovement(walls);
             clock.AddTime(0.03F);
 
             srcRect = new Rectangle((texture.Width / 4) * PacAnimation(), 0, texture.Width / 4, texture.Height);
@@ -43,35 +44,37 @@ namespace PacMan.GameObjects
             spriteBatch.Draw(texture, pos, srcRect, Color.White, rotation, new Vector2(20, 20), scale, texEffects, 1f);
         }
 
-        private void PacMovement()
+        private void PacMovement(List<Walls> walls)
         {
-
+            Vector2 newPacPos = new Vector2(pos.X, pos.Y);
+            float newRot = rotation;
+            SpriteEffects newEffect = texEffects;
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                texEffects = SpriteEffects.None;
-                pos.X += 1;
-                rotation = MathHelper.ToRadians(0);
+                newEffect = SpriteEffects.None;
+                newPacPos.X += 1;
+                newRot = MathHelper.ToRadians(0);
                 movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                texEffects = SpriteEffects.FlipHorizontally;
-                pos.X -= 1f;
-                rotation = MathHelper.ToRadians(0);
+                newEffect = SpriteEffects.FlipHorizontally;
+                newPacPos.X -= 1f;
+                newRot = MathHelper.ToRadians(0);
                 movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
-                texEffects = SpriteEffects.None;
-                pos.Y -= 1f;
-                rotation = MathHelper.ToRadians(-90);
+                newEffect = SpriteEffects.None;
+                newPacPos.Y -= 1f;
+                newRot = MathHelper.ToRadians(-90);
                 movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
-                texEffects = SpriteEffects.FlipHorizontally;
-                pos.Y += 1f;
-                rotation = MathHelper.ToRadians(-90);
+                newEffect = SpriteEffects.FlipHorizontally;
+                newPacPos.Y += 1f;
+                newRot = MathHelper.ToRadians(-90);
                 movement = true;
             }
             else
@@ -79,7 +82,17 @@ namespace PacMan.GameObjects
                 movement = false;
                 pacAnimation = 1;
             }
-            
+            if (!Collision(newPacPos, walls))
+            {
+                pos = newPacPos;
+                rotation = newRot;
+                texEffects = newEffect;
+            }
+            else
+            {
+
+            }
+
         }
         private int PacAnimation()
         {
@@ -97,6 +110,18 @@ namespace PacMan.GameObjects
             }
             
             return pacAnimation;
+        }
+        private bool Collision(Vector2 newPacPos, List<Walls> walls)
+        {
+            Rectangle temp = new Rectangle((int)newPacPos.X - 20, (int)newPacPos.Y - 20, 40, 40);
+            foreach (Walls wall in walls)
+            {
+                if (wall.Rect.Intersects(temp))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

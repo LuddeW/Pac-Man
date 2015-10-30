@@ -14,10 +14,18 @@ namespace PacMan.GameObjects.StillObjects
             this.texture = texture;
             this.pos = pos;
         }
-        
+
+        public Rectangle Rect
+        {
+            get
+            {
+                return new Rectangle((int)pos.X, (int)pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
+            }
+        }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Rectangle((int)pos.X, (int)pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE), Color.White);
+            spriteBatch.Draw(texture, Rect, Color.White);
         }
     }
 }
