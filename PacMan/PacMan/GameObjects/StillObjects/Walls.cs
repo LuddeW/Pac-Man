@@ -17,7 +17,7 @@ namespace PacMan.GameObjects.StillObjects
         
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Rectangle((int)pos.X, (int)pos.Y, texture.Width, texture.Height), Color.White);
+            spriteBatch.Draw(texture, new Rectangle((int)pos.X, (int)pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE), Color.White);
         }
     }
 }

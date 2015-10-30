@@ -8,6 +8,8 @@ namespace PacMan
     
     public class PacManGame : Game
     {
+        public const int TILE_SIZE = 40;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
