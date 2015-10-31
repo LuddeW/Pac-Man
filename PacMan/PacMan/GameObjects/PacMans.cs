@@ -51,6 +51,7 @@ namespace PacMan.GameObjects
 
             spriteBatch.Draw(rect, pos, Color.Chocolate);
 
+            UpdateOriginPos();
             spriteBatch.Draw(texture, pos, srcRect, Color.White, rotation, originPos, scale, texEffects, 1f);
         }
 
@@ -61,8 +62,6 @@ namespace PacMan.GameObjects
             SpriteEffects newEffect = texEffects;
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                originPos.X = 0;
-                originPos.Y = 0;
                 newEffect = SpriteEffects.None;
                 newPacPos.X += 1;
                 newRot = MathHelper.ToRadians(0);
@@ -70,8 +69,6 @@ namespace PacMan.GameObjects
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                originPos.X = 0;
-                originPos.Y = 0;
                 newEffect = SpriteEffects.FlipHorizontally;
                 newPacPos.X -= 1f;
                 newRot = MathHelper.ToRadians(0);
@@ -79,8 +76,6 @@ namespace PacMan.GameObjects
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
-                originPos.X = 40;
-                originPos.Y = 0;
                 newEffect = SpriteEffects.None;
                 newPacPos.Y -= 1f;
                 newRot = MathHelper.ToRadians(-90);
@@ -88,8 +83,6 @@ namespace PacMan.GameObjects
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
-                originPos.X = 40;
-                originPos.Y = 0;
                 newEffect = SpriteEffects.FlipHorizontally;
                 newPacPos.Y += 1f;
                 newRot = MathHelper.ToRadians(-90);
@@ -106,12 +99,22 @@ namespace PacMan.GameObjects
                 rotation = newRot;
                 texEffects = newEffect;
             }
+        }
+
+        private void UpdateOriginPos()
+        {
+            if(((int)rotation)==0)
+            {
+                originPos.X = 0;
+                originPos.Y = 0;
+            }
             else
             {
-
+                originPos.X = 40;
+                originPos.Y = 0;
             }
-
         }
+
         private int PacAnimation()
         {
             if (movement)
