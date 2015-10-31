@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PacMan.GameObjects.StillObjects
 {
-    class Floor
+    class Points
     {
     }
 }

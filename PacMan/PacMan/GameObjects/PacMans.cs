@@ -20,6 +20,7 @@ namespace PacMan.GameObjects
         SpriteEffects texEffects;
         bool movement = false;
         Clock clock;
+        Vector2 originPos = new Vector2(0, 0);
 
         public PacMans(Texture2D texture, Vector2 pos) : base(texture, pos)
         {
@@ -41,7 +42,8 @@ namespace PacMan.GameObjects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, pos, srcRect, Color.White, rotation, new Vector2(20, 20), scale, texEffects, 1f);
+            UpdateOriginPos();
+            spriteBatch.Draw(texture, pos, srcRect, Color.White, rotation, originPos, scale, texEffects, 1f);
         }
 
         private void PacMovement(List<Walls> walls)
@@ -94,6 +96,21 @@ namespace PacMan.GameObjects
             }
 
         }
+
+        private void UpdateOriginPos()
+        {
+            if (((int)rotation) == 0)
+            {
+                originPos.X = 0;
+                originPos.Y = 0;
+            }
+            else
+            {
+                originPos.X = 40;
+                originPos.Y = 0;
+            }
+        }
+
         private int PacAnimation()
         {
             if (movement)
@@ -113,7 +130,7 @@ namespace PacMan.GameObjects
         }
         private bool Collision(Vector2 newPacPos, List<Walls> walls)
         {
-            Rectangle temp = new Rectangle((int)newPacPos.X - 20, (int)newPacPos.Y - 20, 40, 40);
+            Rectangle temp = new Rectangle((int)newPacPos.X, (int)newPacPos.Y, 40, 40);
             foreach (Walls wall in walls)
             {
                 if (wall.Rect.Intersects(temp))

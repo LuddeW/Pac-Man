@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/GameObjects/StillObjects/Content/pacman.png</SourceFile>
+  <SourceFile>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/GameObjects/Content/pacman.png</SourceFile>
   <SourceTime>2015-10-22T14:01:11.6094522+02:00</SourceTime>
   <DestFile>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/Content/bin/Windows/pacman.xnb</DestFile>
-  <DestTime>2015-10-28T14:21:09.8165093+01:00</DestTime>
+  <DestTime>2015-10-31T16:45:54.4681267+01:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2015-04-29T19:14:44+02:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

@@ -42,8 +42,7 @@
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Ghosts.cs" />
     <Compile Include="GameObjects\PacMans.cs" />
-    <Compile Include="GameObjects\StillObjects\Floor.cs" />
-    <Compile Include="GameObjects\StillObjects\PointFloor.cs" />
+    <Compile Include="GameObjects\StillObjects\Points.cs" />
     <Compile Include="GameObjects\StillObjects\PowerUps.cs" />
     <Compile Include="GameObjects\StillObjects\Walls.cs" />
     <Compile Include="PacManGame.cs" />
@@ -60,16 +59,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="GameObjects\StillObjects\Content\menudoge75x75.png" />
-    <Content Include="GameObjects\StillObjects\Content\pacman.png" />
-    <Content Include="GameObjects\StillObjects\Content\Wall-test.png" />
+    <Content Include="GameObjects\Content\menudoge75x75.png" />
+    <Content Include="GameObjects\Content\pacman.png" />
+    <Content Include="GameObjects\Content\Wall-test.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="GameObjects\StillObjects\Content\Content.mgcb" />
+    <MonoGameContentReference Include="GameObjects\Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GameObjects\StillObjects\Content\MenuFont.spritefont" />
+    <None Include="GameObjects\Content\MenuFont.spritefont" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
