@@ -31,8 +31,21 @@ namespace PacMan.GameObjects
             originPos = new Vector2(0, 0);
         }
 
-        // Override?
-        public void Update(List<Walls> walls)
+        public Rectangle Rect
+        {
+            get
+            {
+                return Rect2(pos);
+            }
+        }
+
+        public Rectangle Rect2(Vector2 pos)
+        {
+            return new Rectangle((int)pos.X, (int)pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
+        }
+
+    // Override?
+    public void Update(List<Walls> walls)
         {
             PacMovement(walls);
             clock.AddTime(0.03F);
@@ -108,7 +121,7 @@ namespace PacMan.GameObjects
                 originPos.X = 0;
                 originPos.Y = 0;
             }
-            else
+                else
             {
                 originPos.X = 40;
                 originPos.Y = 0;
@@ -134,10 +147,9 @@ namespace PacMan.GameObjects
         }
         private bool Collision(Vector2 newPacPos, List<Walls> walls)
         {
-            Rectangle temp = new Rectangle((int)newPacPos.X, (int)newPacPos.Y, 40, 40);
             foreach (Walls wall in walls)
             {
-                if (wall.Rect.Intersects(temp))
+                if (wall.Rect.Intersects(Rect2(newPacPos)))
                 {
                     return true;
                 }

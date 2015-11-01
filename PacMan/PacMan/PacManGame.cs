@@ -32,7 +32,7 @@ namespace PacMan
         {
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = 600;
-            graphics.PreferredBackBufferHeight = 615;
+            graphics.PreferredBackBufferHeight = 665;
             graphics.ApplyChanges();
             base.Initialize();
         }
@@ -106,6 +106,8 @@ namespace PacMan
 
                 case GameState.GameScreen:
                     gameScreen.Draw(spriteBatch);
+                    string score = "Score: " + gameScreen.Points;
+                    spriteBatch.DrawString(menuFont, score, new Vector2(5, 615), Color.White);
                     break;
             }
             spriteBatch.End();

@@ -20,15 +20,21 @@ namespace PacMan.Screens
         Texture2D wall;
 
         Vector2 pacPos = new Vector2(60, 60);
-        Rectangle pacSrcRect;
         Rectangle pacHitPos;
         Rectangle wallRect;
         PacMans pacman;
         List<string> strings = new List<string>();
-        List<Walls> walls = new List<Walls>();     
-
-        int pacAnimation = 0;
-        bool movement = false;
+        List<Walls> walls = new List<Walls>();
+        List<PointFloor> pointsList = new List<PointFloor>();
+        int points = 0;
+        public int Points
+        {
+            get { return points; }
+            set { points = value; }
+        }
+        Texture2D smallPoint;
+        Texture2D largePoint;
+        Texture2D collectedPoint;
 
         public GameScreen(PacManGame game)
         {
@@ -39,7 +45,9 @@ namespace PacMan.Screens
         {
             pacSprite = game.Content.Load<Texture2D>(@"pacman");
             wall = game.Content.Load<Texture2D>(@"Wall-test");
-            pacman = new PacMans(pacSprite, pacPos);
+            smallPoint = game.Content.Load<Texture2D>(@"SmallPointTile");
+            largePoint = game.Content.Load<Texture2D>(@"LargePointTile");
+            collectedPoint = game.Content.Load<Texture2D>(@"CollectedPointTile");
             StreamReader sr = new StreamReader(@"testlevel.txt");
             int row = 0;
             while (!sr.EndOfStream)
@@ -62,6 +70,11 @@ namespace PacMan.Screens
 
         }
 
+        void AddPoints( int addedPoints)
+        {
+            points += addedPoints;
+        } 
+
         private void ObjectFactory(char objectChar, int row, int col)
         {
             Vector2 pos = new Vector2(PacManGame.TILE_SIZE * col, PacManGame.TILE_SIZE * row);
@@ -70,6 +83,17 @@ namespace PacMan.Screens
                 case 'W':
                     walls.Add(new Walls(wall, pos));
                     break;
+                case 'C':
+                    pacman = new PacMans(pacSprite, pos);
+                    break;
+                case 'p':
+                    pointsList.Add(new PointFloor(smallPoint, collectedPoint, pos,
+                                new PointFloor.AddPointsDelegate(AddPoints), 10));
+                    break;
+                case 'P':
+                    pointsList.Add(new PointFloor(largePoint, collectedPoint, pos,
+                                new PointFloor.AddPointsDelegate(AddPoints), 50));
+                    break;
             }
 
         }
@@ -77,6 +101,15 @@ namespace PacMan.Screens
         public void Update(GameTime gameTime)
         {
             pacman.Update(walls);
+            CollectPoints();
+        }
+
+        private void CollectPoints()
+        {
+            foreach (PointFloor pointFloor in pointsList)
+            {
+                pointFloor.Hit(pacman.Rect);
+            }
         }
 
         //private void PacMovement()
@@ -134,8 +167,17 @@ namespace PacMan.Screens
             wallRect = new Rectangle(100, 100, wall.Width * 4, wall.Height * 4);
             //spriteBatch.Draw(pacSprite, pos, pacSrcRect, Color.White, rotation, new Vector2(20, 20), scale, pacEffects, 1f);
             //spriteBatch.Draw(wall, wallRect, Color.White);
-            pacman.Draw(spriteBatch);
             DrawWalls(spriteBatch);
+            DrawFlooorPoints(spriteBatch);
+            pacman.Draw(spriteBatch);
+        }
+
+        private void DrawFlooorPoints(SpriteBatch spriteBatch)
+        {
+            foreach (PointFloor pointFloor in pointsList)
+            {
+                pointFloor.Draw(spriteBatch);
+            }
         }
 
         private void DrawWalls(SpriteBatch spriteBatch)

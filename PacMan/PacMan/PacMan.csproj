@@ -62,6 +62,9 @@
   <ItemGroup>
     <Content Include="GameObjects\StillObjects\Content\menudoge75x75.png" />
     <Content Include="GameObjects\StillObjects\Content\pacman.png" />
+    <Content Include="GameObjects\StillObjects\Content\LargePointTile.png" />
+    <Content Include="GameObjects\StillObjects\Content\CollectedPointTile.png" />
+    <Content Include="GameObjects\StillObjects\Content\SmallPointTile.png" />
     <Content Include="GameObjects\StillObjects\Content\Wall-test.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
