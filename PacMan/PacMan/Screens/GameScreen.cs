@@ -16,18 +16,17 @@ namespace PacMan.Screens
         PacManGame game;
 
         Clock clock = new Clock();
+
         Texture2D pacSprite;
         Texture2D wall;
+        Texture2D ghost;
 
         Vector2 pacPos = new Vector2(40, 40);
-        Rectangle pacHitPos;
-        Rectangle wallRect;
+   
         PacMans pacman;
         List<string> strings = new List<string>();
-        List<Walls> walls = new List<Walls>();     
-
-        int pacAnimation = 0;
-        bool movement = false;
+        List<Walls> walls = new List<Walls>();
+        List<Ghosts> ghosts = new List<Ghosts>();    
 
         public GameScreen(PacManGame game)
         {
@@ -38,6 +37,7 @@ namespace PacMan.Screens
         {
             pacSprite = game.Content.Load<Texture2D>(@"pacman");
             wall = game.Content.Load<Texture2D>(@"Wall-test");
+            ghost = game.Content.Load<Texture2D>(@"ghost");
             StreamReader sr = new StreamReader(@"testlevel.txt");
             int row = 0;
             while (!sr.EndOfStream)
@@ -63,6 +63,9 @@ namespace PacMan.Screens
                 case 'P':
                     pacman = new PacMans(pacSprite, pos);
                     break;
+                case 'G':
+                    ghosts.Add(new Ghosts(ghost, pos));
+                    break;
             }
 
         }
@@ -74,9 +77,9 @@ namespace PacMan.Screens
 
         public void Draw(SpriteBatch spriteBatch)
         {
-           // wallRect = new Rectangle(100, 100, wall.Width * 4, wall.Height * 4);
             pacman.Draw(spriteBatch);
             DrawWalls(spriteBatch);
+            DrawGhosts(spriteBatch);
         }
 
         private void DrawWalls(SpriteBatch spriteBatch)
@@ -84,6 +87,13 @@ namespace PacMan.Screens
             foreach (Walls wall in walls)
             {
                 wall.Draw(spriteBatch);
+            }
+        }
+        private void DrawGhosts(SpriteBatch spritebatch)
+        {
+            foreach (Ghosts ghost in ghosts)
+            {
+                ghost.Draw(spritebatch);
             }
         }
     }

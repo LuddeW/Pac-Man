@@ -11,8 +11,6 @@ namespace PacMan.GameObjects
 {
     class PacMans:GameObject
     {
-        //Texture2D texture;
-        //Vector2 pos;
         Rectangle srcRect;
         float rotation = 0f;
         float scale = 1f;

@@ -27,3 +27,4 @@ C:\Users\Ludwig\Desktop\Skola\ObjektorienteradSpelprogramering\Inlämning\PacMan
 C:\Users\Ludwig\Desktop\Skola\ObjektorienteradSpelprogramering\Inlämning\PacMan\PacMan\PacMan\bin\Windows\Debug\Content\MenuFont.xnb
 C:\Users\Ludwig\Desktop\Skola\ObjektorienteradSpelprogramering\Inlämning\PacMan\PacMan\PacMan\bin\Windows\Debug\Content\pacman.xnb
 C:\Users\Ludwig\Desktop\Skola\ObjektorienteradSpelprogramering\Inlämning\PacMan\PacMan\PacMan\bin\Windows\Debug\Content\Wall-test.xnb
+C:\Users\Ludwig\Desktop\Skola\ObjektorienteradSpelprogramering\Inlämning\PacMan\PacMan\PacMan\bin\Windows\Debug\Content\ghost.xnb
