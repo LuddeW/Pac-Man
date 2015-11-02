@@ -24,7 +24,7 @@ namespace PacMan.GameObjects
 
         public void Update()
         {
-            posRect = new Rectangle((int)pos.X, (int)pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
+            posRect = new Rectangle((int)pos.X, (int)pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE - 1);
             srcRect = new Rectangle(texture.Width / 8 * GhostAnimation(), texture.Height / 7 * 1, texture.Width / 8, texture.Height / 7);
             clock.AddTime(0.01F);
         }

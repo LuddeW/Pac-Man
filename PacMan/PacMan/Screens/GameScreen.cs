@@ -22,12 +22,13 @@ namespace PacMan.Screens
         Texture2D ghost;
         Texture2D coin;
 
-        Vector2 pacPos = new Vector2(40, 40);
+        Vector2 pacPos = new Vector2(PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
    
         PacMans pacman;
         List<string> strings = new List<string>();
         List<Walls> walls = new List<Walls>();
-        List<Ghosts> ghosts = new List<Ghosts>();    
+        List<Ghosts> ghosts = new List<Ghosts>();
+        List<Coins> coins = new List<Coins>();  
 
         public GameScreen(PacManGame game)
         {
@@ -68,6 +69,9 @@ namespace PacMan.Screens
                 case 'G':
                     ghosts.Add(new Ghosts(ghost, pos));
                     break;
+                case 'C':
+                    coins.Add(new Coins(coin, new Vector2(pos.X + 15, pos.Y + 15)));
+                    break;
             }
 
         }
@@ -86,6 +90,7 @@ namespace PacMan.Screens
             pacman.Draw(spriteBatch);
             DrawWalls(spriteBatch);
             DrawGhosts(spriteBatch);
+            DrawCoins(spriteBatch);
         }
 
         private void DrawWalls(SpriteBatch spriteBatch)
@@ -95,11 +100,20 @@ namespace PacMan.Screens
                 wall.Draw(spriteBatch);
             }
         }
+
         private void DrawGhosts(SpriteBatch spritebatch)
         {
             foreach (Ghosts ghost in ghosts)
             {
                 ghost.Draw(spritebatch);
+            }
+        }
+
+        private void DrawCoins(SpriteBatch spritebatch)
+        {
+            foreach (Coins coin in coins)
+            {
+                coin.Draw(spritebatch);
             }
         }
     }

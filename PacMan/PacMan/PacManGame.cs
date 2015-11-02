@@ -9,6 +9,7 @@ namespace PacMan
     public class PacManGame : Game
     {
         public const int TILE_SIZE = 40;
+        const int HUD_HEIGHT = 30;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -31,8 +32,8 @@ namespace PacMan
         protected override void Initialize()
         {
             IsMouseVisible = true;
-            graphics.PreferredBackBufferWidth = 600;
-            graphics.PreferredBackBufferHeight = 615;
+            graphics.PreferredBackBufferWidth = TILE_SIZE * 15;
+            graphics.PreferredBackBufferHeight = TILE_SIZE * 15 + HUD_HEIGHT;
             graphics.ApplyChanges();
             base.Initialize();
         }
