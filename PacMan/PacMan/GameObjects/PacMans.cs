@@ -11,14 +11,16 @@ namespace PacMan.GameObjects
 {
     class PacMans:GameObject
     {
+        Clock clock;
+
         Rectangle srcRect;
+        Vector2 originPos = new Vector2(0, 0);
+
         float rotation = 0f;
         float scale = 1f;
         int pacAnimation = 1;
-        SpriteEffects texEffects;
         bool movement = false;
-        Clock clock;
-        Vector2 originPos = new Vector2(0, 0);
+        SpriteEffects texEffects;
 
         public PacMans(Texture2D texture, Vector2 pos) : base(texture, pos)
         {
@@ -28,12 +30,10 @@ namespace PacMan.GameObjects
             clock = new Clock();
         }
 
-        // Override?
         public void Update(List<Walls> walls)
         {
             PacMovement(walls);
             clock.AddTime(0.03F);
-
             srcRect = new Rectangle((texture.Width / 4) * PacAnimation(), 0, texture.Width / 4, texture.Height);
 
         }
@@ -92,7 +92,20 @@ namespace PacMan.GameObjects
             {
 
             }
+            PacTeleport();
 
+        }
+
+        private void PacTeleport()
+        {
+            if (pos.X < - PacManGame.TILE_SIZE - 1)
+            {
+                pos.X = PacManGame.TILE_SIZE * 15 - 1;
+            }
+            else if (pos.X > 600)
+            {
+                pos.X = - PacManGame.TILE_SIZE + 2;
+            }
         }
 
         private void UpdateOriginPos()
@@ -123,7 +136,6 @@ namespace PacMan.GameObjects
                     }
                 }
             }
-
             return pacAnimation;
         }
 

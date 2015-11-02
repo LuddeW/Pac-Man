@@ -12,7 +12,6 @@ namespace PacMan.GameObjects.StillObjects
         public Coins(Texture2D texture, Vector2 pos) : base(texture, pos)
         {
 
-        }
-       
+        }     
     }
 }

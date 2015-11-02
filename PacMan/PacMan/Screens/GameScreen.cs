@@ -23,12 +23,12 @@ namespace PacMan.Screens
         Texture2D coin;
 
         Vector2 pacPos = new Vector2(PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
-   
+
         PacMans pacman;
         List<string> strings = new List<string>();
         List<Walls> walls = new List<Walls>();
         List<Ghosts> ghosts = new List<Ghosts>();
-        List<Coins> coins = new List<Coins>();  
+        List<Coins> coins = new List<Coins>();
 
         public GameScreen(PacManGame game)
         {
@@ -37,10 +37,20 @@ namespace PacMan.Screens
 
         public void Load()
         {
+            LoadPictures();
+            CreateObjectFactory();
+        }
+
+        private void LoadPictures()
+        {
             pacSprite = game.Content.Load<Texture2D>(@"pacman");
             wall = game.Content.Load<Texture2D>(@"Wall-test");
             ghost = game.Content.Load<Texture2D>(@"ghost");
             coin = game.Content.Load<Texture2D>(@"coin");
+        }
+
+        private void CreateObjectFactory()
+        {
             StreamReader sr = new StreamReader(@"testlevel.txt");
             int row = 0;
             while (!sr.EndOfStream)
@@ -48,11 +58,10 @@ namespace PacMan.Screens
                 string objectStr = sr.ReadLine();
                 for (int col = 0; col < objectStr.Length; col++)
                 {
-                    ObjectFactory(objectStr[col] , row, col);
+                    ObjectFactory(objectStr[col], row, col);
                 }
                 row++;
             }
-
         }
 
         private void ObjectFactory(char objectChar, int row, int col)
