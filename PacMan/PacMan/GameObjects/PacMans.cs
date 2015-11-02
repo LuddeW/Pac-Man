@@ -123,9 +123,10 @@ namespace PacMan.GameObjects
                     }
                 }
             }
-            
+
             return pacAnimation;
         }
+
         private bool Collision(Vector2 newPacPos, List<Walls> walls)
         {
             Rectangle temp = new Rectangle((int)newPacPos.X, (int)newPacPos.Y, 40, 40);
