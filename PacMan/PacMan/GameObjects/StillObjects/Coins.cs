@@ -7,8 +7,12 @@ using System.Text;
 
 namespace PacMan.GameObjects.StillObjects
 {
-    class Coins
+    class Coins:GameObject
     {
+        public Coins(Texture2D texture, Vector2 pos) : base (texture, pos)
+        {
+
+        }
        
     }
 }
