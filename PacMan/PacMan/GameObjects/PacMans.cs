@@ -129,7 +129,7 @@ namespace PacMan.GameObjects
 
         private bool Collision(Vector2 newPacPos, List<Walls> walls)
         {
-            Rectangle temp = new Rectangle((int)newPacPos.X, (int)newPacPos.Y, 40, 40);
+            Rectangle temp = new Rectangle((int)newPacPos.X, (int)newPacPos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
             foreach (Walls wall in walls)
             {
                 if (wall.Rect.Intersects(temp))
