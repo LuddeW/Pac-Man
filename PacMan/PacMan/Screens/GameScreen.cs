@@ -73,6 +73,10 @@ namespace PacMan.Screens
         public void Update(GameTime gameTime)
         {
             pacman.Update(walls);
+            foreach (Ghosts ghost in ghosts)
+            {
+                ghost.Update();
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
