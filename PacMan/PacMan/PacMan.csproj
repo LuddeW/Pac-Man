@@ -42,7 +42,7 @@
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Ghosts.cs" />
     <Compile Include="GameObjects\PacMans.cs" />
-    <Compile Include="GameObjects\StillObjects\Points.cs" />
+    <Compile Include="GameObjects\StillObjects\Coins.cs" />
     <Compile Include="GameObjects\StillObjects\PowerUps.cs" />
     <Compile Include="GameObjects\StillObjects\Walls.cs" />
     <Compile Include="PacManGame.cs" />
@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="GameObjects\Content\coin.png" />
     <Content Include="GameObjects\Content\ghost.png" />
     <Content Include="GameObjects\Content\menudoge75x75.png" />
     <Content Include="GameObjects\Content\pacman.png" />

@@ -20,12 +20,11 @@ namespace PacMan.GameObjects
         {
             this.texture = texture;
             this.pos = pos;
-            posRect = new Rectangle((int)pos.X, (int)pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
         }
 
         public void Update()
         {
-            
+            posRect = new Rectangle((int)pos.X, (int)pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
             srcRect = new Rectangle(texture.Width / 8 * GhostAnimation(), texture.Height / 7 * 1, texture.Width / 8, texture.Height / 7);
             clock.AddTime(0.01F);
         }
@@ -45,8 +44,7 @@ namespace PacMan.GameObjects
                     ghostAnimation = 0;
                 }
             }
-            return ghostAnimation;
-            
+            return ghostAnimation;           
         }
     }
 }

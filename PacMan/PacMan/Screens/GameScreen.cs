@@ -20,6 +20,7 @@ namespace PacMan.Screens
         Texture2D pacSprite;
         Texture2D wall;
         Texture2D ghost;
+        Texture2D coin;
 
         Vector2 pacPos = new Vector2(40, 40);
    
@@ -38,6 +39,7 @@ namespace PacMan.Screens
             pacSprite = game.Content.Load<Texture2D>(@"pacman");
             wall = game.Content.Load<Texture2D>(@"Wall-test");
             ghost = game.Content.Load<Texture2D>(@"ghost");
+            coin = game.Content.Load<Texture2D>(@"coin");
             StreamReader sr = new StreamReader(@"testlevel.txt");
             int row = 0;
             while (!sr.EndOfStream)
