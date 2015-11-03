@@ -11,26 +11,35 @@ namespace PacMan.GameObjects
 {
     class PacMans:GameObject
     {
+        enum Direction
+        {
+            LEFT, RIGHT, UP, DOWN
+        }
         //Texture2D texture;
         //Vector2 pos;
         Rectangle srcRect;
         float rotation = 0f;
+        float horizSpeed = 0f;
+        float vertSpeed = 0f;
         float scale = 1f;
         int pacAnimation = 1;
         SpriteEffects texEffects;
         bool movement = false;
         Clock clock;
         private Vector2 originPos;
+        Direction currentDirection = Direction.LEFT;
+        private readonly float pacmanSpeed = 1f;
+        SpriteSheet spriteSheet;
 
         public PacMans(Texture2D texture, Vector2 pos) : base(texture, pos)
         {
-            this.pos = pos;
-            this.texture = texture;
             texEffects = SpriteEffects.None;
+            spriteSheet = new SpriteSheet(4, 1, texture);
             clock = new Clock();
             originPos = new Vector2(0, 0);
+            ChangeDirection(currentDirection);
         }
-
+ 
         public Rectangle Rect
         {
             get
@@ -56,61 +65,73 @@ namespace PacMan.GameObjects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D rect = new Texture2D(spriteBatch.GraphicsDevice, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
-
-            Color[] data = new Color[PacManGame.TILE_SIZE * PacManGame.TILE_SIZE];
-            for (int i = 0; i < data.Length; ++i) data[i] = Color.Chocolate;
-            rect.SetData(data);
-
-            spriteBatch.Draw(rect, pos, Color.Chocolate);
-
             UpdateOriginPos();
-            spriteBatch.Draw(texture, pos, srcRect, Color.White, rotation, originPos, scale, texEffects, 1f);
+//            spriteBatch.Draw(texture, pos, srcRect, Color.White, rotation, originPos, scale, texEffects, 1f);
+
+            spriteBatch.Draw(texture, pos, spriteSheet.SrcRect( PacAnimation()), Color.White, rotation, originPos, scale, texEffects, 1f);
         }
 
         private void PacMovement(List<Walls> walls)
         {
             Vector2 newPacPos = new Vector2(pos.X, pos.Y);
-            float newRot = rotation;
-            SpriteEffects newEffect = texEffects;
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            newPacPos.X += horizSpeed;
+            newPacPos.Y += vertSpeed;
+            if (!Collision(newPacPos, walls))
             {
-                newEffect = SpriteEffects.None;
-                newPacPos.X += 1;
-                newRot = MathHelper.ToRadians(0);
-                movement = true;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                newEffect = SpriteEffects.FlipHorizontally;
-                newPacPos.X -= 1f;
-                newRot = MathHelper.ToRadians(0);
-                movement = true;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                newEffect = SpriteEffects.None;
-                newPacPos.Y -= 1f;
-                newRot = MathHelper.ToRadians(-90);
-                movement = true;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                newEffect = SpriteEffects.FlipHorizontally;
-                newPacPos.Y += 1f;
-                newRot = MathHelper.ToRadians(-90);
-                movement = true;
+                pos = newPacPos;
             }
             else
             {
                 movement = false;
                 pacAnimation = 1;
             }
-            if (!Collision(newPacPos, walls))
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                pos = newPacPos;
-                rotation = newRot;
-                texEffects = newEffect;
+                ChangeDirection(Direction.RIGHT);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                ChangeDirection(Direction.LEFT);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                ChangeDirection(Direction.UP);
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                ChangeDirection(Direction.DOWN);
+            }
+        }
+
+        private void ChangeDirection(Direction changeDirection)
+        {
+            movement = true;
+            switch (changeDirection)
+            {
+                case Direction.RIGHT:
+                    texEffects = SpriteEffects.None;
+                    horizSpeed = pacmanSpeed;
+                    vertSpeed = 0f;
+                    rotation = MathHelper.ToRadians(0);
+                    break;
+                case Direction.LEFT:
+                    texEffects = SpriteEffects.FlipHorizontally;
+                    horizSpeed = -pacmanSpeed;
+                    vertSpeed = 0f;
+                    rotation = MathHelper.ToRadians(0);
+                    break;
+                case Direction.UP:
+                    texEffects = SpriteEffects.None;
+                    vertSpeed = -pacmanSpeed;
+                    horizSpeed = 0f;
+                    rotation = MathHelper.ToRadians(-90);
+                    break;
+                case Direction.DOWN:
+                    texEffects = SpriteEffects.FlipHorizontally;
+                    vertSpeed = pacmanSpeed;
+                    horizSpeed = 0f;
+                    rotation = MathHelper.ToRadians(-90);
+                    break;
             }
         }
 

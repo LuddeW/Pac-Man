@@ -42,6 +42,7 @@
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Ghosts.cs" />
     <Compile Include="GameObjects\PacMans.cs" />
+    <Compile Include="GameObjects\SpriteSheet.cs" />
     <Compile Include="GameObjects\StillObjects\Floor.cs" />
     <Compile Include="GameObjects\StillObjects\PointFloor.cs" />
     <Compile Include="GameObjects\StillObjects\PowerUps.cs" />
@@ -60,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="GameObjects\StillObjects\Content\ghost.png" />
     <Content Include="GameObjects\StillObjects\Content\menudoge75x75.png" />
     <Content Include="GameObjects\StillObjects\Content\pacman.png" />
     <Content Include="GameObjects\StillObjects\Content\LargePointTile.png" />
@@ -72,6 +74,7 @@
     <MonoGameContentReference Include="GameObjects\StillObjects\Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="GameObjects\StillObjects\Content\MenuFont.spritefont" />
   </ItemGroup>
   <ItemGroup />
