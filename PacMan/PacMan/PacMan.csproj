@@ -63,7 +63,7 @@
     <Content Include="GameObjects\Content\ghost.png" />
     <Content Include="GameObjects\Content\menudoge75x75.png" />
     <Content Include="GameObjects\Content\pacman.png" />
-    <Content Include="GameObjects\Content\Wall-test.png" />
+    <Content Include="GameObjects\Content\wall.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

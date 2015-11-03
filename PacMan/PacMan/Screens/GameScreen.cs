@@ -44,7 +44,7 @@ namespace PacMan.Screens
         private void LoadPictures()
         {
             pacSprite = game.Content.Load<Texture2D>(@"pacman");
-            wall = game.Content.Load<Texture2D>(@"Wall-test");
+            wall = game.Content.Load<Texture2D>(@"wall");
             ghost = game.Content.Load<Texture2D>(@"ghost");
             coin = game.Content.Load<Texture2D>(@"coin");
         }
