@@ -124,7 +124,7 @@ namespace PacMan.Screens
 
         private int GhostAnimation()
         {
-            if (clock.Timer() > 0.5f)
+            if (clock.Timer() > 1f)
             {
                 ghostAnimation++;
                 clock.ResetTime();

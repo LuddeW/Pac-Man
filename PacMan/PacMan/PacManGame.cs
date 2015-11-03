@@ -9,7 +9,7 @@ namespace PacMan
     public class PacManGame : Game
     {
         public const int TILE_SIZE = 40;
-        const int HUD_HEIGHT = 30;
+        const int HUD_HEIGHT = 40;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
