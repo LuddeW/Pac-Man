@@ -10,60 +10,130 @@ namespace PacMan.Screens
 {
     class StartMenu
     {
-        PacManGame Game;
+        PacManGame game;
 
-        Texture2D menuDoge;
-        SpriteFont MenuFont;
+        Clock clock = new Clock();
+
+        SpriteFont menufont;
 
         protected enum ButtonState { Start, LevelEditor, Highscore}
         ButtonState CurrentState = ButtonState.Start;
 
-        public StartMenu(PacManGame Game, SpriteFont MenuFont)
-        {
-            this.Game = Game;
-            this.MenuFont = MenuFont;
+        Texture2D ghost;
 
-            LoadPictures();
+        Rectangle posRect;
+        Rectangle srcRect;
+
+        string start = "START";
+        string leveleditor = "LEVEL-EDITOR";
+        string highscore = "HIGHSCORE";
+        int ghostAnimation = 0;
+
+        public StartMenu(PacManGame game, SpriteFont MenuFont)
+        {
+            this.game = game;
+            this.menufont = MenuFont;
+
         }
 
-        protected void LoadPictures()
+        public void LoadPictures()
         {
-            menuDoge = Game.Content.Load<Texture2D>(@"menudoge75x75");
+            ghost = game.Content.Load<Texture2D>(@"ghost");
         }
 
         public void Update()
         {
-            
-        }
-
-        public void Draw(SpriteBatch sb)
-        {
-            
             switch (CurrentState)
             {
                 case ButtonState.Start:
-                    
+                    posRect = new Rectangle(game.Window.ClientBounds.Width / 4 - 2 * PacManGame.TILE_SIZE, PacManGame.TILE_SIZE * 4 + 5, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
                     break;
                 case ButtonState.LevelEditor:
-                    
+                    posRect = new Rectangle(game.Window.ClientBounds.Width / 4 - 2 * PacManGame.TILE_SIZE, PacManGame.TILE_SIZE * 7 + 5, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
                     break;
                 case ButtonState.Highscore:
-                    
+                    posRect = new Rectangle(game.Window.ClientBounds.Width / 4 - 2 * PacManGame.TILE_SIZE, PacManGame.TILE_SIZE * 10 + 5, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
                     break;
             }
-            DrawFonts(sb);
+            clock.AddTime(0.1F);
+            srcRect = new Rectangle(ghost.Width / 8 * GhostAnimation(), ghost.Height / 7 * 1, ghost.Width / 8, ghost.Height / 7);
+            HandleMenu();
         }
 
-        protected void DrawFonts(SpriteBatch sb)
+        public void Draw(SpriteBatch spritebatch)
         {
-           
+            DrawPacman(spritebatch);
+            DrawFonts(spritebatch);
         }
+
+        protected void DrawFonts(SpriteBatch spritebatch)
+        {
+            spritebatch.DrawString(menufont, start, new Vector2(game.Window.ClientBounds.Width / 4, PacManGame.TILE_SIZE * 4), Color.White);
+            spritebatch.DrawString(menufont, leveleditor, new Vector2(game.Window.ClientBounds.Width / 4, PacManGame.TILE_SIZE * 7), Color.White);
+            spritebatch.DrawString(menufont, highscore, new Vector2(game.Window.ClientBounds.Width / 4, PacManGame.TILE_SIZE * 10), Color.White);
+
+        }
+
+        protected void DrawPacman(SpriteBatch spritebatch)
+        {
+            spritebatch.Draw(ghost, posRect, srcRect, Color.White);
+        }
+
         protected void HandleMenu()
         {
             if (CurrentState == ButtonState.Start )
             {
-
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter)) 
+                {
+                    game.SetScreen(PacManGame.GameState.GameScreen);
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                {
+                    CurrentState = ButtonState.LevelEditor;
+                }
             }
+            if (CurrentState == ButtonState.LevelEditor)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    //game.SetScreen(PacManGame.GameState.LevelEditor);
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                {
+                    CurrentState = ButtonState.Start;
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                {
+                    CurrentState = ButtonState.Highscore;
+                }
+            }
+            if (CurrentState == ButtonState.Highscore)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    game.SetScreen(PacManGame.GameState.HighScore);
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                {
+                    CurrentState = ButtonState.LevelEditor;
+                }
+            }
+        }
+
+        private int GhostAnimation()
+        {
+            if (clock.Timer() > 0.5f)
+            {
+                ghostAnimation++;
+                clock.ResetTime();
+                if (ghostAnimation > 7)
+                {
+                    ghostAnimation = 0;
+                }
+            }
+            return ghostAnimation;
         }
     }
 }

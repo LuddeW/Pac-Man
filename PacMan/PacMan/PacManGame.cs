@@ -14,13 +14,15 @@ namespace PacMan
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
-        public enum GameState { StartMenu, HighScore, GameScreen}
-        GameState CurrentState = GameState.GameScreen;
+        public enum GameState { StartMenu, HighScore, GameScreen, LevelEditor}
+        GameState CurrentState = GameState.StartMenu;
         
         StartMenu startMenu;
         GameScreen gameScreen;
 
         SpriteFont menuFont;
+
+        //KeyboardState prevKeyState;
 
         public PacManGame()
         {
@@ -46,6 +48,7 @@ namespace PacMan
             LoadFonts();
             CreatScreens();
             gameScreen.Load();
+            startMenu.LoadPictures();
         }
 
         protected void CreatScreens()
@@ -69,11 +72,11 @@ namespace PacMan
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            //KeyboardState keyboardState = Keyboard.GetState();
             switch (CurrentState)
             {
                 case GameState.StartMenu:
-
+                    startMenu.Update();
                     break;
 
                 case GameState.HighScore:
@@ -83,8 +86,11 @@ namespace PacMan
                 case GameState.GameScreen:
                     gameScreen.Update(gameTime);
                     break;
-            }
+                case GameState.LevelEditor:
 
+                    break;
+            }
+            //prevKeyState = keyboardState;
             
 
             base.Update(gameTime);
@@ -98,7 +104,7 @@ namespace PacMan
             switch (CurrentState)
             {
                 case GameState.StartMenu:
-                    
+                    startMenu.Draw(spriteBatch);
                     break;
 
                 case GameState.HighScore:
@@ -108,11 +114,19 @@ namespace PacMan
                 case GameState.GameScreen:
                     gameScreen.Draw(spriteBatch);
                     break;
+                case GameState.LevelEditor:
+
+                    break;
             }
             spriteBatch.End();
 
 
             base.Draw(gameTime);
+        }
+
+        public void SetScreen(GameState GameState)
+        {
+            CurrentState = GameState;
         }
     }
 }
