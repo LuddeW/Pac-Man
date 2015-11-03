@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PacMan.GameObjects
 {
-    class Ghosts:GameObject
+    class Ghosts:MovingObjects
     {
         Clock clock = new Clock();
 
@@ -19,12 +19,12 @@ namespace PacMan.GameObjects
         public Ghosts(Texture2D texture, Vector2 pos) : base(texture, pos)
         {
             this.texture = texture;
-            this.pos = pos;
+            this.Pos = pos;
         }
 
         public void Update()
         {
-            posRect = new Rectangle((int)pos.X, (int)pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
+            posRect = new Rectangle((int)Pos.X, (int)Pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
             srcRect = new Rectangle(texture.Width / 8 * GhostAnimation(), texture.Height / 7 * 1, texture.Width / 8, texture.Height / 7);
             clock.AddTime(0.01F);
         }

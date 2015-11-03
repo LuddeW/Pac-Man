@@ -79,7 +79,7 @@ namespace PacMan.Screens
                     ghosts.Add(new Ghosts(ghost, pos));
                     break;
                 case 'C':
-                    coins.Add(new Coins(coin, new Vector2(pos.X + 15, pos.Y + 15)));
+                    coins.Add(new Coins(coin, wall, new Vector2(pos.X + 15, pos.Y + 15)));
                     break;
             }
 
@@ -92,14 +92,18 @@ namespace PacMan.Screens
             {
                 ghost.Update();
             }
+            foreach (Coins coin in coins)
+            {
+                coin.Hit(pacman.PosRect);   
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            pacman.Draw(spriteBatch);
             DrawWalls(spriteBatch);
             DrawGhosts(spriteBatch);
             DrawCoins(spriteBatch);
+            pacman.Draw(spriteBatch);
         }
 
         private void DrawWalls(SpriteBatch spriteBatch)

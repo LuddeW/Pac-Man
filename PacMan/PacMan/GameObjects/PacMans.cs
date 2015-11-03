@@ -9,7 +9,7 @@ using System.Text;
 
 namespace PacMan.GameObjects
 {
-    class PacMans:GameObject
+    class PacMans:MovingObjects
     {
         Clock clock;
 
@@ -19,12 +19,12 @@ namespace PacMan.GameObjects
         float rotation = 0f;
         float scale = 1f;
         int pacAnimation = 1;
-        bool movement = false;
+        bool movement = true;
         SpriteEffects texEffects;
 
         public PacMans(Texture2D texture, Vector2 pos) : base(texture, pos)
         {
-            this.pos = pos;
+            this.Pos = pos;
             this.texture = texture;
             texEffects = SpriteEffects.None;
             clock = new Clock();
@@ -32,79 +32,84 @@ namespace PacMan.GameObjects
 
         public void Update(List<Walls> walls)
         {
-            PacMovement(walls);
+            MoveObject(walls);
             clock.AddTime(0.03F);
+            PacTeleport();
             srcRect = new Rectangle((texture.Width / 4) * PacAnimation(), 0, texture.Width / 4, texture.Height);
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             UpdateOriginPos();
-            spriteBatch.Draw(texture, pos, srcRect, Color.White, rotation, originPos, scale, texEffects, 1f);
+            spriteBatch.Draw(texture, Pos, srcRect, Color.White, rotation, originPos, scale, texEffects, 1f);
         }
 
-        private void PacMovement(List<Walls> walls)
+        public override bool TestDirectionChange(List<Walls> walls)
         {
-            Vector2 newPacPos = new Vector2(pos.X, pos.Y);
+            Vector2 newPacPos = new Vector2(Pos.X, Pos.Y);
             float newRot = rotation;
             SpriteEffects newEffect = texEffects;
+            Direction newDirecton = CurrentState;
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
+                newDirecton = Direction.RIGHT;
                 newEffect = SpriteEffects.None;
-                newPacPos.X += 1;
+                newPacPos.X += speed;
                 newRot = MathHelper.ToRadians(0);
                 movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
+                newDirecton = Direction.LEFT;
                 newEffect = SpriteEffects.FlipHorizontally;
-                newPacPos.X -= 1f;
+                newPacPos.X -= speed;
+
                 newRot = MathHelper.ToRadians(0);
                 movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
+                newDirecton = Direction.UP;
                 newEffect = SpriteEffects.None;
-                newPacPos.Y -= 1f;
+                newPacPos.Y -= speed;
                 newRot = MathHelper.ToRadians(-90);
                 movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
+                newDirecton = Direction.DOWN;
                 newEffect = SpriteEffects.FlipHorizontally;
-                newPacPos.Y += 1f;
+                newPacPos.Y += speed;
                 newRot = MathHelper.ToRadians(-90);
                 movement = true;
             }
             else
             {
-                movement = false;
-                pacAnimation = 1;
+                return false;
             }
             if (!Collision(newPacPos, walls))
             {
-                pos = newPacPos;
+                Pos = newPacPos;
                 rotation = newRot;
                 texEffects = newEffect;
+                CurrentState = newDirecton;
+                return true;
             }
             else
             {
-
+                return false;
             }
-            PacTeleport();
-
         }
 
         private void PacTeleport()
         {
-            if (pos.X < - PacManGame.TILE_SIZE - 1)
+            if (Pos.X < - PacManGame.TILE_SIZE - 1)
             {
-                pos.X = PacManGame.TILE_SIZE * 15 - 1;
+                SetPosX(PacManGame.TILE_SIZE * 15 - 1);
             }
-            else if (pos.X > 600)
+            else if (Pos.X > 600)
             {
-                pos.X = - PacManGame.TILE_SIZE + 2;
+                SetPosX(-PacManGame.TILE_SIZE + 2); 
             }
         }
 
@@ -139,17 +144,9 @@ namespace PacMan.GameObjects
             return pacAnimation;
         }
 
-        private bool Collision(Vector2 newPacPos, List<Walls> walls)
+        public override void SetPosRect()
         {
-            Rectangle temp = new Rectangle((int)newPacPos.X, (int)newPacPos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
-            foreach (Walls wall in walls)
-            {
-                if (wall.Rect.Intersects(temp))
-                {
-                    return true;
-                }
-            }
-            return false;
+            PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width / 4, texture.Height);
         }
     }
 }

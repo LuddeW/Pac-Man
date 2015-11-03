@@ -9,20 +9,40 @@ namespace PacMan.GameObjects.StillObjects
 {
     class Coins : GameObject
     {
-        Rectangle posRect;
-
         public bool visible = true;
 
-        public Coins(Texture2D texture, Vector2 pos) : base(texture, pos)
+        Texture2D test;
+
+        public Coins(Texture2D texture, Texture2D test, Vector2 pos) : base(texture, pos)
         {
-            posRect = new Rectangle((int)pos.X, (int)pos.Y, texture.Width, texture.Height);
-        }     
-        public void DrawCoin(SpriteBatch spritebatch)
+            this.test = test;
+        }   
+          
+        public override void Draw(SpriteBatch spritebatch)
         {
             if (visible)
             {
-                spritebatch.Draw(texture, posRect, Color.White);
-            }           
+                spritebatch.Draw(texture, PosRect, Color.White);
+            }
+            
+        }
+
+        public bool Hit(Rectangle hitRect)
+        {
+            if (PosRect.Intersects(hitRect))
+            {
+                visible = false;
+                return true;
+            }   
+            else
+            {
+                return false;
+            }  
+        }
+
+        public override void SetPosRect()
+        {
+            PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width, texture.Height);
         }
     }
 }

@@ -41,6 +41,7 @@
     <Compile Include="Clock.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Ghosts.cs" />
+    <Compile Include="GameObjects\MovingObjects.cs" />
     <Compile Include="GameObjects\PacMans.cs" />
     <Compile Include="GameObjects\StillObjects\Coins.cs" />
     <Compile Include="GameObjects\StillObjects\PowerUps.cs" />
