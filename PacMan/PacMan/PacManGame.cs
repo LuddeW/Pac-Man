@@ -22,7 +22,7 @@ namespace PacMan
 
         SpriteFont menuFont;
 
-        //KeyboardState prevKeyState;
+        KeyboardState prevKeyState;
 
         public PacManGame()
         {
@@ -72,11 +72,11 @@ namespace PacMan
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            //KeyboardState keyboardState = Keyboard.GetState();
+            KeyboardState keyboardState = Keyboard.GetState();
             switch (CurrentState)
             {
                 case GameState.StartMenu:
-                    startMenu.Update();
+                    startMenu.Update(keyboardState, prevKeyState);
                     break;
 
                 case GameState.HighScore:
@@ -90,7 +90,7 @@ namespace PacMan
 
                     break;
             }
-            //prevKeyState = keyboardState;
+            prevKeyState = keyboardState;
             
 
             base.Update(gameTime);

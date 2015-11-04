@@ -41,7 +41,7 @@ namespace PacMan.Screens
             ghost = game.Content.Load<Texture2D>(@"ghost");
         }
 
-        public void Update()
+        public void Update(KeyboardState keyState, KeyboardState prevKeyState)
         {
             switch (CurrentState)
             {
@@ -57,7 +57,7 @@ namespace PacMan.Screens
             }
             clock.AddTime(0.1F);
             srcRect = new Rectangle(ghost.Width / 8 * GhostAnimation(), ghost.Height / 7 * 1, ghost.Width / 8, ghost.Height / 7);
-            HandleMenu();
+            HandleMenu(keyState, prevKeyState);
         }
 
         public void Draw(SpriteBatch spritebatch)
@@ -79,7 +79,7 @@ namespace PacMan.Screens
             spritebatch.Draw(ghost, posRect, srcRect, Color.White);
         }
 
-        protected void HandleMenu()
+        protected void HandleMenu(KeyboardState keyState, KeyboardState prevKeyState)
         {
             if (CurrentState == ButtonState.Start )
             {
@@ -87,10 +87,11 @@ namespace PacMan.Screens
                 {
                     game.SetScreen(PacManGame.GameState.GameScreen);
                 }
-                if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                if (Keyboard.GetState().IsKeyDown(Keys.Down) && prevKeyState.IsKeyUp(Keys.Down))
                 {
                     CurrentState = ButtonState.LevelEditor;
                 }
+                prevKeyState = keyState;
             }
             if (CurrentState == ButtonState.LevelEditor)
             {
@@ -99,26 +100,28 @@ namespace PacMan.Screens
                     //game.SetScreen(PacManGame.GameState.LevelEditor);
                 }
 
-                if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                if (Keyboard.GetState().IsKeyDown(Keys.Up) && prevKeyState.IsKeyUp(Keys.Up))
                 {
                     CurrentState = ButtonState.Start;
                 }
-
-                if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                if (Keyboard.GetState().IsKeyDown(Keys.Down) && prevKeyState.IsKeyUp(Keys.Down))
                 {
                     CurrentState = ButtonState.Highscore;
                 }
+                prevKeyState = keyState;
             }
+            
             if (CurrentState == ButtonState.Highscore)
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
                     game.SetScreen(PacManGame.GameState.HighScore);
                 }
-                if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                if (Keyboard.GetState().IsKeyDown(Keys.Up) && prevKeyState.IsKeyUp(Keys.Up))
                 {
                     CurrentState = ButtonState.LevelEditor;
                 }
+                prevKeyState = keyState;
             }
         }
 
