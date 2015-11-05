@@ -13,7 +13,7 @@ namespace PacMan.GameObjects
         internal enum Direction { UP, DOWN, LEFT, RIGHT}
         internal Direction CurrentState = Direction.RIGHT;
 
-        internal float speed = 1f;
+        internal float speed = 2f;
 
         public MovingObjects(Texture2D texture, Vector2 pos) : base (texture, pos)
         {

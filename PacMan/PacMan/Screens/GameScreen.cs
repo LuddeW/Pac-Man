@@ -90,7 +90,7 @@ namespace PacMan.Screens
             pacman.Update(walls);
             foreach (Ghosts ghost in ghosts)
             {
-                ghost.Update();
+                ghost.Update(walls);
             }
             foreach (Coins coin in coins)
             {
@@ -101,8 +101,8 @@ namespace PacMan.Screens
         public void Draw(SpriteBatch spriteBatch)
         {
             DrawWalls(spriteBatch);
-            DrawGhosts(spriteBatch);
             DrawCoins(spriteBatch);
+            DrawGhosts(spriteBatch);
             pacman.Draw(spriteBatch);
         }
 
