@@ -15,7 +15,7 @@ namespace PacMan.GameObjects
         Rectangle srcRect;
         Rectangle posRect;
 
-        Random rnd = new Random();
+       
 
         int ghostAnimation = 0;
 
@@ -37,23 +37,23 @@ namespace PacMan.GameObjects
         {
             Vector2 newGhostPos = new Vector2(Pos.X, Pos.Y);
             Direction newDirecton = CurrentState;
-            int rndom = rnd.Next(0, 100);
-            if (rndom <= 24)
+            Console.WriteLine(rndom);
+            if (Rndom() <= 24)
             {
                 newDirecton = Direction.RIGHT;               
                 newGhostPos.X += speed;
             }
-            else if (rndom > 24 && rndom <= 49)
+            else if (Rndom() > 24 && Rndom() <= 49)
             {
                 newDirecton = Direction.LEFT;               
                 newGhostPos.X -= speed;
             }
-            else if (rndom > 49 && rndom <= 74)
+            else if (Rndom() > 49 && Rndom() <= 74)
             {
                 newDirecton = Direction.UP;                
                 newGhostPos.Y -= speed;
             }
-            else if (rndom > 74)
+            else if (Rndom() > 74)
             {
                 newDirecton = Direction.DOWN;
                 newGhostPos.Y += speed;
@@ -70,6 +70,7 @@ namespace PacMan.GameObjects
             }
             else
             {
+                NewRndom();
                 return false;
             }
         }

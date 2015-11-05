@@ -13,11 +13,25 @@ namespace PacMan.GameObjects
         internal enum Direction { UP, DOWN, LEFT, RIGHT}
         internal Direction CurrentState = Direction.RIGHT;
 
+        internal Random rnd = new Random();
+        internal int rndom = 58;
+
         internal float speed = 2f;
 
         public MovingObjects(Texture2D texture, Vector2 pos) : base (texture, pos)
         {
 
+        }
+
+        public void NewRndom()
+        {
+            rndom = rnd.Next(0, 100);
+        }
+
+        public int Rndom()
+        {
+            
+            return rndom;
         }
 
         public void MoveObject(List<Walls> walls)
