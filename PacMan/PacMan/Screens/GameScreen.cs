@@ -30,6 +30,8 @@ namespace PacMan.Screens
         List<Ghosts> ghosts = new List<Ghosts>();
         List<Coins> coins = new List<Coins>();
 
+        public static int ghostColor = 1;
+
         public GameScreen(PacManGame game)
         {
             this.game = game;
@@ -90,7 +92,12 @@ namespace PacMan.Screens
             pacman.Update(walls);
             foreach (Ghosts ghost in ghosts)
             {
-                ghost.Update(walls);
+                ghost.Update(walls, ghostColor);
+                ghostColor++;
+                if (ghostColor > 3)
+                {
+                    ghostColor = 1;
+                }
             }
             foreach (Coins coin in coins)
             {

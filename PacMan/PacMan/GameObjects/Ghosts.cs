@@ -13,11 +13,10 @@ namespace PacMan.GameObjects
         Clock clock = new Clock();
 
         Rectangle srcRect;
-        Rectangle posRect;
-
-       
+        Rectangle posRect;     
 
         int ghostAnimation = 0;
+        
 
         public Ghosts(Texture2D texture, Vector2 pos) : base(texture, pos)
         {
@@ -25,11 +24,11 @@ namespace PacMan.GameObjects
             this.Pos = pos;
         }
 
-        public void Update(List<Walls> walls)
+        public void Update(List<Walls> walls, int ghostColor)
         {
             MoveObject(walls);
             posRect = new Rectangle((int)Pos.X, (int)Pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
-            srcRect = new Rectangle(texture.Width / 8 * GhostAnimation(), texture.Height / 7 * 1, texture.Width / 8, texture.Height / 7);
+            srcRect = new Rectangle(texture.Width / 8 * GhostAnimation(), texture.Height / 7 * ghostColor, texture.Width / 8, texture.Height / 7);
             clock.AddTime(0.01F);
         }
 
