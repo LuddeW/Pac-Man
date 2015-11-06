@@ -11,25 +11,42 @@ namespace PacMan.GameObjects.StillObjects
     {
         public bool visible = true;
 
-        Texture2D test;
+        private int coins;
+        private Rectangle srcRect;
+        private Rectangle dstRect;
 
-        public Coins(Texture2D texture, Texture2D test, Vector2 pos) : base(texture, pos)
+        public Coins(Texture2D texture, Texture2D test, Vector2 pos, int coins) : base(texture, pos)
         {
-            this.test = test;
-        }   
-          
-        public override void Draw(SpriteBatch spritebatch)
+            this.coins = coins;
+            srcRect = new Rectangle(0, 0, texture.Width, texture.Height);
+            dstRect = new Rectangle(PosRect.Location, PosRect.Size);
+            if (coins <= 10)
+            {
+                dstRect.Inflate(-15, -15);
+            }
+            else
+            {
+                dstRect.Inflate(-10, -10);
+            }
+
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
         {
             if (visible)
             {
-                spritebatch.Draw(texture, PosRect, Color.White);
+                spriteBatch.Draw(texture, dstRect, srcRect, Color.White);
             }
-            
+
         }
 
         public bool Hit(Rectangle hitRect)
         {
-            if (PosRect.Intersects(hitRect))
+            Rectangle tempHitRect = new Rectangle(hitRect.Location, hitRect.Size);
+            Rectangle temp = new Rectangle(PosRect.Location, PosRect.Size);
+            tempHitRect.Inflate(-19, -19);
+            temp.Inflate(-19, -19);
+            if (temp.Intersects(tempHitRect))
             {
                 visible = false;
                 return true;
@@ -38,11 +55,6 @@ namespace PacMan.GameObjects.StillObjects
             {
                 return false;
             }  
-        }
-
-        public override void SetPosRect()
-        {
-            PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width, texture.Height);
         }
     }
 }

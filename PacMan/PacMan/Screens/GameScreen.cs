@@ -78,8 +78,11 @@ namespace PacMan.Screens
                 case 'G':
                     ghosts.Add(new Ghosts(ghost, pos));
                     break;
+                case 'c':
+                    coins.Add(new Coins(coin, wall, new Vector2(pos.X, pos.Y), 10));
+                    break;
                 case 'C':
-                    coins.Add(new Coins(coin, wall, new Vector2(pos.X + 15, pos.Y + 15)));
+                    coins.Add(new Coins(coin, wall, new Vector2(pos.X, pos.Y), 50));
                     break;
             }
 

@@ -13,7 +13,7 @@ namespace PacMan.GameObjects
         internal enum Direction { UP, DOWN, LEFT, RIGHT}
         internal Direction CurrentState = Direction.RIGHT;
 
-        internal Random rnd = new Random();
+        internal static Random rnd = new Random();
         internal int rndom = 58;
 
         internal float speed = 2f;

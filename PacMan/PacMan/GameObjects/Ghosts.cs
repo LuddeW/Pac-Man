@@ -13,23 +13,29 @@ namespace PacMan.GameObjects
         Clock clock = new Clock();
 
         Rectangle srcRect;
-        Rectangle posRect;
+ //       Rectangle posRect;
 
        
 
         int ghostAnimation = 0;
+        int ghostSprite = 1;
+        static int ghostSpriteIx = 1;
 
         public Ghosts(Texture2D texture, Vector2 pos) : base(texture, pos)
         {
             this.texture = texture;
-            this.Pos = pos;
+            ghostSprite = ghostSpriteIx;
+            ghostSpriteIx++;
+            if(ghostSpriteIx > 4)
+            {
+                ghostSpriteIx = 1;
+            }
         }
 
         public void Update(List<Walls> walls)
         {
             MoveObject(walls);
-            posRect = new Rectangle((int)Pos.X, (int)Pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
-            srcRect = new Rectangle(texture.Width / 8 * GhostAnimation(), texture.Height / 7 * 1, texture.Width / 8, texture.Height / 7);
+            srcRect = new Rectangle(texture.Width / 8 * GhostAnimation(), texture.Height / 7 * ghostSprite, texture.Width / 8, texture.Height / 7);
             clock.AddTime(0.01F);
         }
 
@@ -37,7 +43,6 @@ namespace PacMan.GameObjects
         {
             Vector2 newGhostPos = new Vector2(Pos.X, Pos.Y);
             Direction newDirecton = CurrentState;
-            Console.WriteLine(rndom);
             if (Rndom() <= 24)
             {
                 newDirecton = Direction.RIGHT;               
@@ -77,7 +82,7 @@ namespace PacMan.GameObjects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, posRect, srcRect, Color.White);
+            spriteBatch.Draw(texture, PosRect, srcRect, Color.White);
         }
 
         private int GhostAnimation()

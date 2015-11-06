@@ -58,7 +58,7 @@ namespace PacMan.GameObjects
 
         public virtual void SetPosRect()
         {
-            posRect = new Rectangle((int)pos.X, (int)pos.Y, texture.Width, texture.Height);
+            posRect = new Rectangle((int)Pos.X, (int)Pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
         }
 
     }

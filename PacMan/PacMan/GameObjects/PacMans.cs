@@ -105,7 +105,7 @@ namespace PacMan.GameObjects
         {
             if (Pos.X < - PacManGame.TILE_SIZE - 1)
             {
-                SetPosX(PacManGame.TILE_SIZE * 15 - 1);
+                SetPosX(PacManGame.TILE_SIZE * 15);
             }
             else if (Pos.X > 600)
             {
@@ -142,11 +142,6 @@ namespace PacMan.GameObjects
                 }
             }
             return pacAnimation;
-        }
-
-        public override void SetPosRect()
-        {
-            PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width / 4, texture.Height);
         }
     }
 }
