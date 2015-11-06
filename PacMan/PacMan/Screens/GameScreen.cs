@@ -98,6 +98,7 @@ namespace PacMan.Screens
                 {
                     ghostColor = 1;
                 }
+                ghost.Hit(pacman.PosRect);
             }
             foreach (Coins coin in coins)
             {

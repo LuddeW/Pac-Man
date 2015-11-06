@@ -37,7 +37,6 @@ namespace PacMan.GameObjects
         {
             Vector2 newGhostPos = new Vector2(Pos.X, Pos.Y);
             Direction newDirecton = CurrentState;
-            Console.WriteLine(rndom);
             if (Rndom() <= 24)
             {
                 newDirecton = Direction.RIGHT;               
@@ -96,6 +95,24 @@ namespace PacMan.GameObjects
                 }
             }
             return ghostAnimation;           
+        }
+
+        public override void SetPosRect()
+        {
+            PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width, texture.Height);
+        }
+
+        public bool Hit(Rectangle hitRect)
+        {
+            if (PosRect.Intersects(hitRect))
+            {
+                visible = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
