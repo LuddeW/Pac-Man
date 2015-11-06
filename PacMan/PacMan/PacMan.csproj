@@ -62,6 +62,7 @@
   <ItemGroup>
     <Content Include="GameObjects\Content\coin.png" />
     <Content Include="GameObjects\Content\ghost.png" />
+    <Content Include="GameObjects\Content\lifes.png" />
     <Content Include="GameObjects\Content\menudoge75x75.png" />
     <Content Include="GameObjects\Content\pacman.png" />
     <Content Include="GameObjects\Content\wall.png" />
@@ -71,6 +72,7 @@
     <MonoGameContentReference Include="GameObjects\Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="GameObjects\Content\hudfont.spritefont" />
     <None Include="GameObjects\Content\MenuFont.spritefont" />
   </ItemGroup>
   <ItemGroup />

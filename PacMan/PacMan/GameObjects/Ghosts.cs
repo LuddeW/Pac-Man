@@ -16,6 +16,7 @@ namespace PacMan.GameObjects
         Rectangle posRect;     
 
         int ghostAnimation = 0;
+        public int numberOfLives = 2;
         bool visible = true;
         
 
@@ -99,14 +100,14 @@ namespace PacMan.GameObjects
 
         public override void SetPosRect()
         {
-            PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width, texture.Height);
+            PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width / 8, texture.Height / 7);
         }
 
         public bool Hit(Rectangle hitRect)
         {
             if (PosRect.Intersects(hitRect))
             {
-                visible = false;
+                numberOfLives--;
                 return true;
             }
             else

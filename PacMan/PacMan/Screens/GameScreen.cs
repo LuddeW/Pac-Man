@@ -21,6 +21,9 @@ namespace PacMan.Screens
         Texture2D wall;
         Texture2D ghost;
         Texture2D coin;
+        Texture2D life;
+
+        SpriteFont hudfont;
 
         Vector2 pacPos = new Vector2(PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
 
@@ -31,6 +34,8 @@ namespace PacMan.Screens
         List<Coins> coins = new List<Coins>();
 
         public static int ghostColor = 1;
+        int numberOfLives = 0;
+        string lives = "Lives:";
 
         public GameScreen(PacManGame game)
         {
@@ -41,6 +46,7 @@ namespace PacMan.Screens
         {
             LoadPictures();
             CreateObjectFactory();
+            LoadFonts();
         }
 
         private void LoadPictures()
@@ -49,6 +55,12 @@ namespace PacMan.Screens
             wall = game.Content.Load<Texture2D>(@"wall");
             ghost = game.Content.Load<Texture2D>(@"ghost");
             coin = game.Content.Load<Texture2D>(@"coin");
+            life = game.Content.Load<Texture2D>(@"lifes");
+        }
+
+        private void LoadFonts()
+        {
+            hudfont = game.Content.Load<SpriteFont>(@"hudfont");
         }
 
         private void CreateObjectFactory()
@@ -75,7 +87,7 @@ namespace PacMan.Screens
                     walls.Add(new Walls(wall, pos));
                     break;
                 case 'P':
-                    pacman = new PacMans(pacSprite, pos);
+                    pacman = new PacMans(pacSprite, pos );
                     break;
                 case 'G':
                     ghosts.Add(new Ghosts(ghost, pos));
@@ -102,8 +114,9 @@ namespace PacMan.Screens
             }
             foreach (Coins coin in coins)
             {
-                coin.Hit(pacman.PosRect);   
+                coin.Hit(pacman.PosRect);
             }
+            lifeSource();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -112,6 +125,8 @@ namespace PacMan.Screens
             DrawCoins(spriteBatch);
             DrawGhosts(spriteBatch);
             pacman.Draw(spriteBatch);
+            DrawFonts(spriteBatch);
+            DrawLives(spriteBatch);
         }
 
         private void DrawWalls(SpriteBatch spriteBatch)
@@ -136,6 +151,23 @@ namespace PacMan.Screens
             {
                 coin.Draw(spritebatch);
             }
+        }
+
+        private void DrawLives(SpriteBatch spritebatch)
+        {
+            Rectangle lifeRect = new Rectangle(PacManGame.TILE_SIZE * 2, PacManGame.TILE_SIZE * 15, PacManGame.TILE_SIZE * numberOfLives, PacManGame.TILE_SIZE);
+            spritebatch.Draw(life, lifeRect, lifeSource(), Color.White);
+        }
+
+        private void DrawFonts(SpriteBatch spritebatch)
+        {
+            Vector2 livesLen = hudfont.MeasureString(lives);
+            spritebatch.DrawString(hudfont, lives, new Vector2(PacManGame.TILE_SIZE, PacManGame.TILE_SIZE * 15 + livesLen.Y / 2), Color.White);
+        }
+        private Rectangle lifeSource()
+        {
+            Rectangle lifeSrcRect = new Rectangle(0, 0, life.Width /2 * numberOfLives, life.Height);
+            return lifeSrcRect;
         }
     }
 }

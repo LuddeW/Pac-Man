@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/GameObjects/Content/MenuFont.spritefont</SourceFile>
-  <SourceTime>2015-11-06T15:05:43.4369822+01:00</SourceTime>
-  <DestFile>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/GameObjects/Content/bin/MenuFont.xnb</DestFile>
-  <DestTime>2015-11-06T15:12:16.8919021+01:00</DestTime>
+  <SourceFile>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/GameObjects/Content/hudfont.spritefont</SourceFile>
+  <SourceTime>2015-01-20T01:24:04+01:00</SourceTime>
+  <DestFile>C:/Users/Ludwig/Desktop/Skola/ObjektorienteradSpelprogramering/Inlämning/PacMan/PacMan/PacMan/GameObjects/Content/bin/hudfont.xnb</DestFile>
+  <DestTime>2015-11-06T15:12:17.5884113+01:00</DestTime>
   <Importer>FontDescriptionImporter</Importer>
   <ImporterTime>2015-04-29T19:14:44+02:00</ImporterTime>
   <Processor>FontDescriptionProcessor</Processor>
