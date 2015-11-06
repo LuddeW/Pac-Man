@@ -16,6 +16,7 @@ namespace PacMan.GameObjects
         Rectangle posRect;     
 
         int ghostAnimation = 0;
+        bool visible = true;
         
 
         public Ghosts(Texture2D texture, Vector2 pos) : base(texture, pos)
@@ -76,7 +77,11 @@ namespace PacMan.GameObjects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, posRect, srcRect, Color.White);
+            if (visible)
+            {
+                spriteBatch.Draw(texture, posRect, srcRect, Color.White);
+            }
+            
         }
 
         private int GhostAnimation()
