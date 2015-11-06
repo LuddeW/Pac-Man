@@ -105,7 +105,7 @@ namespace PacMan.GameObjects
         {
             if (Pos.X < - PacManGame.TILE_SIZE - 1)
             {
-                SetPosX(PacManGame.TILE_SIZE * 15 - 1);
+                SetPosX(PacManGame.TILE_SIZE * 15 - 2);
             }
             else if (Pos.X > 600)
             {
