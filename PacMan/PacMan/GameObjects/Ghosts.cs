@@ -16,9 +16,6 @@ namespace PacMan.GameObjects
         Rectangle posRect;     
 
         int ghostAnimation = 0;
-        public int numberOfLives = 2;
-        bool visible = true;
-        
 
         public Ghosts(Texture2D texture, Vector2 pos) : base(texture, pos)
         {
@@ -77,11 +74,7 @@ namespace PacMan.GameObjects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (visible)
-            {
                 spriteBatch.Draw(texture, posRect, srcRect, Color.White);
-            }
-            
         }
 
         private int GhostAnimation()
@@ -103,7 +96,7 @@ namespace PacMan.GameObjects
             PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width / 8, texture.Height / 7);
         }
 
-        public bool Hit(Rectangle hitRect)
+        public bool Hit(Rectangle hitRect, int numberOfLives)
         {
             if (PosRect.Intersects(hitRect))
             {

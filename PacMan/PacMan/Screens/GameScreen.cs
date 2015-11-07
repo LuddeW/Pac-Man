@@ -34,7 +34,7 @@ namespace PacMan.Screens
         List<Coins> coins = new List<Coins>();
 
         public static int ghostColor = 1;
-        int numberOfLives = 0;
+        int numberOfLives = 2;
         string lives = "Lives:";
 
         public GameScreen(PacManGame game)
@@ -110,13 +110,14 @@ namespace PacMan.Screens
                 {
                     ghostColor = 1;
                 }
-                ghost.Hit(pacman.PosRect);
+                ghost.Hit(pacman.PosRect, numberOfLives);
             }
             foreach (Coins coin in coins)
             {
                 coin.Hit(pacman.PosRect);
             }
             lifeSource();
+            Console.WriteLine(numberOfLives);
         }
 
         public void Draw(SpriteBatch spriteBatch)
