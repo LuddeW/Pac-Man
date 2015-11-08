@@ -21,11 +21,12 @@ namespace PacMan.GameObjects
         int pacAnimation = 1;
         SpriteEffects texEffects;
         private bool pacmanDead = false;
+        Texture2D pacmanDethTex;
+        private bool pacmanDeadInit = false;
 
-        public PacMans(Texture2D texture, Vector2 pos) : base(texture, pos)
+        public PacMans(Texture2D texture, Texture2D pacmanDethTex, Vector2 pos) : base(texture, pos)
         {
-            this.Pos = pos;
-            this.texture = texture;
+            this.pacmanDethTex = pacmanDethTex;
             texEffects = SpriteEffects.None;
             clock = new Clock();
         }
@@ -33,19 +34,40 @@ namespace PacMan.GameObjects
         public void Update(List<Walls> walls, bool pacmanDead)
         {
             this.pacmanDead = pacmanDead;
-            if(!pacmanDead)
+            if (!pacmanDead)
             {
-	            MoveObject(walls);
+                pacmanDeadInit = false;
+                MoveObject(walls);
 	            PacTeleport();
+                srcRect = new Rectangle((texture.Width / 4) * PacAnimation(), 0, texture.Width / 4  , texture.Height);
+            }
+            else
+            {
+                if (pacmanDeadInit == false)
+                {
+                    pacAnimation = 0;
+                    clock.ResetTime();
+                    texEffects = SpriteEffects.None;
+                    CurrentState = Direction.RIGHT;
+                    rotation = 0f;
+                }
+                pacmanDeadInit = true;
+                srcRect = new Rectangle((pacmanDethTex.Width / 6) * PacAnimation(), 0, pacmanDethTex.Width / 6, pacmanDethTex.Height);
             }
             clock.AddTime(0.03F);
-            srcRect = new Rectangle((texture.Width / 6) * PacAnimation(), 0, texture.Width / 6, texture.Height);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             UpdateOriginPos();
-            spriteBatch.Draw(texture, Pos, srcRect, Color.White, rotation, originPos, scale, texEffects, 1f);
+            if (!pacmanDead)
+            {
+                spriteBatch.Draw(texture, Pos, srcRect, Color.White, rotation, originPos, scale, texEffects, 1f);
+            }
+            else
+            {
+                spriteBatch.Draw(pacmanDethTex, Pos, srcRect, Color.White, rotation, originPos, scale, texEffects, 1f);
+            }
         }
 
         public override bool TestDirectionChange(List<Walls> walls)
@@ -142,11 +164,6 @@ namespace PacMan.GameObjects
             }
             else
             {
-                if(pacAnimation < 4)
-                {
-                    pacAnimation = 4;
-                    clock.ResetTime();
-                }
                 if (clock.Timer() > 1f)
                 {
                     pacAnimation++;

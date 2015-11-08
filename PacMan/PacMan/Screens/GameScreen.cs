@@ -18,6 +18,7 @@ namespace PacMan.Screens
         Clock clock = new Clock();
 
         Texture2D pacSprite;
+        Texture2D pacdeathSprite;
         Texture2D wall;
         Texture2D ghost;
         Texture2D coin;
@@ -56,6 +57,7 @@ namespace PacMan.Screens
         private void LoadPictures()
         {
             pacSprite = game.Content.Load<Texture2D>(@"pacman");
+            pacdeathSprite = game.Content.Load<Texture2D>(@"pacmandeath");
             wall = game.Content.Load<Texture2D>(@"wall");
             ghost = game.Content.Load<Texture2D>(@"ghost");
             coin = game.Content.Load<Texture2D>(@"coin");
@@ -92,7 +94,7 @@ namespace PacMan.Screens
                     break;
                 case 'P':
                     pacmanRespawnPos = pos;
-                    pacman = new PacMans(pacSprite, pos );
+                    pacman = new PacMans(pacSprite, pacdeathSprite, pos );
                     break;
                 case 'G':
                     ghostRespawnPos = pos;
