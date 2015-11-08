@@ -19,7 +19,6 @@ namespace PacMan.GameObjects
         float rotation = 0f;
         float scale = 1f;
         int pacAnimation = 1;
-        bool movement = true;
         SpriteEffects texEffects;
         private bool pacmanDead = false;
 
@@ -38,10 +37,6 @@ namespace PacMan.GameObjects
             {
 	            MoveObject(walls);
 	            PacTeleport();
-            }
-            else
-            {
-                movement = false;
             }
             clock.AddTime(0.03F);
             srcRect = new Rectangle((texture.Width / 6) * PacAnimation(), 0, texture.Width / 6, texture.Height);
@@ -65,16 +60,13 @@ namespace PacMan.GameObjects
                 newEffect = SpriteEffects.None;
                 newPacPos.X += speed;
                 newRot = MathHelper.ToRadians(0);
-                movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 newDirecton = Direction.LEFT;
                 newEffect = SpriteEffects.FlipHorizontally;
                 newPacPos.X -= speed;
-
                 newRot = MathHelper.ToRadians(0);
-                movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
@@ -82,7 +74,6 @@ namespace PacMan.GameObjects
                 newEffect = SpriteEffects.None;
                 newPacPos.Y -= speed;
                 newRot = MathHelper.ToRadians(-90);
-                movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
@@ -90,7 +81,6 @@ namespace PacMan.GameObjects
                 newEffect = SpriteEffects.FlipHorizontally;
                 newPacPos.Y += speed;
                 newRot = MathHelper.ToRadians(-90);
-                movement = true;
             }
             else
             {
@@ -138,7 +128,7 @@ namespace PacMan.GameObjects
 
         private int PacAnimation()
         {
-            if (movement)
+            if (!pacmanDead)
             {
                 if (clock.Timer() > 0.2f)
                 {
@@ -150,7 +140,7 @@ namespace PacMan.GameObjects
                     }
                 }
             }
-            else if (pacmanDead)
+            else
             {
                 if(pacAnimation < 4)
                 {
@@ -174,7 +164,6 @@ namespace PacMan.GameObjects
         {            
             Pos = respawnPos;
             pacAnimation = 1;
-            movement = true;
         }
 
     }
