@@ -21,6 +21,7 @@ namespace PacMan.GameObjects
         int pacAnimation = 1;
         bool movement = true;
         SpriteEffects texEffects;
+        private bool pacmanDead = false;
 
         public PacMans(Texture2D texture, Vector2 pos) : base(texture, pos)
         {
@@ -30,12 +31,20 @@ namespace PacMan.GameObjects
             clock = new Clock();
         }
 
-        public void Update(List<Walls> walls)
+        public void Update(List<Walls> walls, bool pacmanDead)
         {
-            MoveObject(walls);
+            this.pacmanDead = pacmanDead;
+            if(!pacmanDead)
+            {
+	            MoveObject(walls);
+	            PacTeleport();
+            }
+            else
+            {
+                movement = false;
+            }
             clock.AddTime(0.03F);
-            PacTeleport();
-            srcRect = new Rectangle((texture.Width / 4) * PacAnimation(), 0, texture.Width / 4, texture.Height);
+            srcRect = new Rectangle((texture.Width / 6) * PacAnimation(), 0, texture.Width / 6, texture.Height);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -141,12 +150,32 @@ namespace PacMan.GameObjects
                     }
                 }
             }
+            else if (pacmanDead)
+            {
+                if(pacAnimation < 4)
+                {
+                    pacAnimation = 4;
+                    clock.ResetTime();
+                }
+                if (clock.Timer() > 1f)
+                {
+                    pacAnimation++;
+                    clock.ResetTime();
+                    if (pacAnimation > 5)
+                    {
+                        pacAnimation = 5;
+                    }
+                }
+            }
             return pacAnimation;
         }
 
-        public override void SetPosRect()
-        {
-            PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width / 4, texture.Height);
+        public override void Respawn(Vector2 respawnPos)
+        {            
+            Pos = respawnPos;
+            pacAnimation = 1;
+            movement = true;
         }
+
     }
 }

@@ -34,8 +34,12 @@ namespace PacMan.Screens
         List<Coins> coins = new List<Coins>();
 
         public static int ghostColor = 1;
-        int numberOfLives = 2;
+        int numberOfLives = 3;
         string lives = "Lives:";
+        private bool pacmanDead = false;
+        private double pacmanDeathTime = 0;
+        private Vector2 pacmanRespawnPos;
+        private Vector2 ghostRespawnPos;
 
         public GameScreen(PacManGame game)
         {
@@ -87,9 +91,11 @@ namespace PacMan.Screens
                     walls.Add(new Walls(wall, pos));
                     break;
                 case 'P':
+                    pacmanRespawnPos = pos;
                     pacman = new PacMans(pacSprite, pos );
                     break;
                 case 'G':
+                    ghostRespawnPos = pos;
                     ghosts.Add(new Ghosts(ghost, pos));
                     break;
                 case 'C':
@@ -101,16 +107,26 @@ namespace PacMan.Screens
 
         public void Update(GameTime gameTime)
         {
-            pacman.Update(walls);
+            if(pacmanDead && gameTime.TotalGameTime.TotalSeconds.CompareTo(pacmanDeathTime + 3) > 0)
+            {
+                RestartGame();
+            }
+            pacman.Update(walls, pacmanDead);
             foreach (Ghosts ghost in ghosts)
             {
-                ghost.Update(walls, ghostColor);
+                ghost.Update(walls, ghostColor, pacmanDead);
                 ghostColor++;
                 if (ghostColor > 3)
                 {
                     ghostColor = 1;
                 }
-                ghost.Hit(pacman.PosRect, numberOfLives);
+                if (!pacmanDead)
+                {
+	                if(ghost.Hit(pacman.PosRect))
+	                {
+	                    KillPacman(gameTime);
+	                }
+                }
             }
             foreach (Coins coin in coins)
             {
@@ -118,6 +134,40 @@ namespace PacMan.Screens
             }
             lifeSource();
             Console.WriteLine(numberOfLives);
+        }
+
+        private void RestartGame()
+        {
+            pacmanDead = false;
+            pacman.Respawn(pacmanRespawnPos);
+            GhostsRespawn(ghostRespawnPos);    
+        }
+
+        private void GhostsRespawn(Vector2 ghostRespawnPos)
+        {
+            foreach (Ghosts ghost in ghosts)
+            {
+                ghost.Respawn(ghostRespawnPos);
+            }
+        }
+
+        private void KillPacman(GameTime gameTime)
+        {
+            pacmanDeathTime = gameTime.TotalGameTime.TotalSeconds;
+            numberOfLives--;
+            if(numberOfLives==0)
+            {
+                EndOfGame();
+            }
+            else
+            {
+                pacmanDead = true;
+            }
+        }
+
+        private void EndOfGame()
+        {
+            game.EndGame();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -156,7 +206,7 @@ namespace PacMan.Screens
 
         private void DrawLives(SpriteBatch spritebatch)
         {
-            Rectangle lifeRect = new Rectangle(PacManGame.TILE_SIZE * 2, PacManGame.TILE_SIZE * 15, PacManGame.TILE_SIZE * numberOfLives, PacManGame.TILE_SIZE);
+            Rectangle lifeRect = new Rectangle(PacManGame.TILE_SIZE * 2, PacManGame.TILE_SIZE * 15, PacManGame.TILE_SIZE * (numberOfLives - 1), PacManGame.TILE_SIZE);
             spritebatch.Draw(life, lifeRect, lifeSource(), Color.White);
         }
 
@@ -167,7 +217,7 @@ namespace PacMan.Screens
         }
         private Rectangle lifeSource()
         {
-            Rectangle lifeSrcRect = new Rectangle(0, 0, life.Width /2 * numberOfLives, life.Height);
+            Rectangle lifeSrcRect = new Rectangle(0, 0, life.Width /2 * (numberOfLives - 1), life.Height);
             return lifeSrcRect;
         }
     }

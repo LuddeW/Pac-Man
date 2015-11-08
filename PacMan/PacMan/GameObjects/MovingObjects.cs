@@ -80,5 +80,11 @@ namespace PacMan.GameObjects
             }
             return false;
         }
+
+        public virtual void Respawn(Vector2 respawnPos)
+        {
+            Pos = respawnPos;
+        }
+
     }
 }

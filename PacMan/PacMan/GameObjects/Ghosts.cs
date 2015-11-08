@@ -23,9 +23,12 @@ namespace PacMan.GameObjects
             this.Pos = pos;
         }
 
-        public void Update(List<Walls> walls, int ghostColor)
+        public void Update(List<Walls> walls, int ghostColor, bool ghostStopMoving)
         {
-            MoveObject(walls);
+            if(!ghostStopMoving)
+            {
+	            MoveObject(walls);
+            }
             posRect = new Rectangle((int)Pos.X, (int)Pos.Y, PacManGame.TILE_SIZE, PacManGame.TILE_SIZE);
             srcRect = new Rectangle(texture.Width / 8 * GhostAnimation(), texture.Height / 7 * ghostColor, texture.Width / 8, texture.Height / 7);
             clock.AddTime(0.01F);
@@ -91,16 +94,10 @@ namespace PacMan.GameObjects
             return ghostAnimation;           
         }
 
-        public override void SetPosRect()
-        {
-            PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width / 8, texture.Height / 7);
-        }
-
-        public bool Hit(Rectangle hitRect, int numberOfLives)
+        public bool Hit(Rectangle hitRect)
         {
             if (PosRect.Intersects(hitRect))
             {
-                numberOfLives--;
                 return true;
             }
             else

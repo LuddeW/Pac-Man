@@ -14,7 +14,7 @@ namespace PacMan
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
-        public enum GameState { StartMenu, HighScore, GameScreen, LevelEditor}
+        public enum GameState { StartMenu, HighScore, GameScreen, LevelEditor, EndGame}
         GameState CurrentState = GameState.StartMenu;
         
         StartMenu startMenu;
@@ -71,7 +71,10 @@ namespace PacMan
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            {
+	            Exit();
+                return;
+            }
             KeyboardState keyboardState = Keyboard.GetState();
             switch (CurrentState)
             {
@@ -89,6 +92,11 @@ namespace PacMan
                 case GameState.LevelEditor:
 
                     break;
+                case GameState.EndGame:
+                    CurrentState = GameState.StartMenu;
+                    gameScreen = new GameScreen(this);
+                    gameScreen.Load();
+                    break;
             }
             prevKeyState = keyboardState;
             
@@ -96,7 +104,11 @@ namespace PacMan
             base.Update(gameTime);
         }
 
-        
+        public void EndGame()
+        {
+            CurrentState = GameState.EndGame;
+        }
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
