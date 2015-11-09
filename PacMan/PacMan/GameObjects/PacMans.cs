@@ -19,7 +19,6 @@ namespace PacMan.GameObjects
         float rotation = 0f;
         float scale = 1f;
         int pacAnimation = 1;
-        bool movement = true;
         SpriteEffects texEffects;
 
         public PacMans(Texture2D texture, Vector2 pos) : base(texture, pos)
@@ -31,10 +30,10 @@ namespace PacMan.GameObjects
         }
 
         public void Update(List<Walls> walls)
-        {
+        {          
             MoveObject(walls);
-            clock.AddTime(0.03F);
-            PacTeleport();
+            PacTeleport();   
+            clock.AddTime(0.03F);           
             srcRect = new Rectangle((texture.Width / 4) * PacAnimation(), 0, texture.Width / 4, texture.Height);
         }
 
@@ -42,7 +41,7 @@ namespace PacMan.GameObjects
         {
             UpdateOriginPos();
             spriteBatch.Draw(texture, Pos, srcRect, Color.White, rotation, originPos, scale, texEffects, 1f);
-        }
+        }   
 
         public override bool TestDirectionChange(List<Walls> walls)
         {
@@ -56,7 +55,6 @@ namespace PacMan.GameObjects
                 newEffect = SpriteEffects.None;
                 newPacPos.X += speed;
                 newRot = MathHelper.ToRadians(0);
-                movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
@@ -65,7 +63,6 @@ namespace PacMan.GameObjects
                 newPacPos.X -= speed;
 
                 newRot = MathHelper.ToRadians(0);
-                movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
@@ -73,7 +70,6 @@ namespace PacMan.GameObjects
                 newEffect = SpriteEffects.None;
                 newPacPos.Y -= speed;
                 newRot = MathHelper.ToRadians(-90);
-                movement = true;
             }
             else if (Keyboard.GetState().IsKeyDown(Keys.Down))
             {
@@ -81,7 +77,6 @@ namespace PacMan.GameObjects
                 newEffect = SpriteEffects.FlipHorizontally;
                 newPacPos.Y += speed;
                 newRot = MathHelper.ToRadians(-90);
-                movement = true;
             }
             else
             {
@@ -129,16 +124,13 @@ namespace PacMan.GameObjects
 
         private int PacAnimation()
         {
-            if (movement)
+            if (clock.Timer() > 0.2f)
             {
-                if (clock.Timer() > 0.2f)
+                pacAnimation++;
+                clock.ResetTime();
+                if (pacAnimation > 3)
                 {
-                    pacAnimation++;
-                    clock.ResetTime();
-                    if (pacAnimation > 3)
-                    {
-                        pacAnimation = 0;
-                    }
+                    pacAnimation = 0;
                 }
             }
             return pacAnimation;
@@ -147,6 +139,15 @@ namespace PacMan.GameObjects
         public override void SetPosRect()
         {
             PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width / 4, texture.Height);
+        }
+
+        public override void Respawn(Vector2 respawnPos)
+        {
+            Pos = respawnPos;
+            pacAnimation = 1;
+            texEffects = SpriteEffects.None;
+            CurrentState = Direction.RIGHT;
+            rotation = 0f;
         }
     }
 }

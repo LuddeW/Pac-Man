@@ -96,11 +96,10 @@ namespace PacMan.GameObjects
             PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width / 8, texture.Height / 7);
         }
 
-        public bool Hit(Rectangle hitRect, int numberOfLives)
+        public bool Hit(Rectangle hitRect)
         {
             if (PosRect.Intersects(hitRect))
             {
-                numberOfLives--;
                 return true;
             }
             else

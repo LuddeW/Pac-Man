@@ -11,12 +11,15 @@ namespace PacMan.GameObjects.StillObjects
     {
         public bool visible = true;
 
-        Texture2D test;
+        AddPoints addPoints;
 
-        public Coins(Texture2D texture, Texture2D test, Vector2 pos) : base(texture, pos)
+        public Coins(Texture2D texture, Vector2 pos, AddPoints addPoints) : base(texture, pos)
         {
-            this.test = test;
-        }   
+            
+            this.addPoints = addPoints;
+        }
+
+        public delegate void AddPoints(int points);
           
         public override void Draw(SpriteBatch spritebatch)
         {
@@ -29,9 +32,10 @@ namespace PacMan.GameObjects.StillObjects
 
         public bool Hit(Rectangle hitRect)
         {
-            if (PosRect.Intersects(hitRect))
+            if (PosRect.Intersects(hitRect) && visible)
             {
                 visible = false;
+                addPoints(10);
                 return true;
             }   
             else
@@ -43,6 +47,11 @@ namespace PacMan.GameObjects.StillObjects
         public override void SetPosRect()
         {
             PosRect = new Rectangle((int)Pos.X, (int)Pos.Y, texture.Width, texture.Height);
+        }
+
+        public bool Eaten()
+        {
+            return !visible;
         }
     }
 }

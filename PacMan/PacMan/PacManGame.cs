@@ -14,11 +14,12 @@ namespace PacMan
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         
-        public enum GameState { StartMenu, HighScore, GameScreen, LevelEditor}
+        public enum GameState { StartMenu, HighScore, GameScreen, LevelEditor, EndScreen}
         GameState CurrentState = GameState.StartMenu;
         
         StartMenu startMenu;
         GameScreen gameScreen;
+        EndScreen endScreen;
 
         SpriteFont menuFont;
 
@@ -55,6 +56,7 @@ namespace PacMan
         {
             startMenu = new StartMenu(this, menuFont);
             gameScreen = new GameScreen(this);
+            endScreen = new EndScreen(this, menuFont);
         }
 
         protected void LoadFonts()
@@ -89,6 +91,17 @@ namespace PacMan
                 case GameState.LevelEditor:
 
                     break;
+                case GameState.EndScreen:
+                    endScreen.Update();
+                    if (endScreen.ChangeScreen())
+                    {
+                        gameScreen = new GameScreen(this);
+                        gameScreen.Load();
+                        CurrentState = GameState.StartMenu;
+                        endScreen.Init();
+                    }
+                    break;
+
             }
             prevKeyState = keyboardState;
             
@@ -116,6 +129,9 @@ namespace PacMan
                     break;
                 case GameState.LevelEditor:
 
+                    break;
+                case GameState.EndScreen:
+                    endScreen.Draw(spriteBatch);
                     break;
             }
             spriteBatch.End();

@@ -33,13 +33,19 @@ namespace PacMan.Screens
         List<Ghosts> ghosts = new List<Ghosts>();
         List<Coins> coins = new List<Coins>();
 
+        Coins.AddPoints addPoints;
+
         public static int ghostColor = 1;
         int numberOfLives = 2;
-        string lives = "Lives:";
+        public static int points = 0;
+        private Vector2 pacmanRespawnPos;
+        private Vector2 ghostRespawnPos;
+        bool allCoinsEaten = false;
 
         public GameScreen(PacManGame game)
         {
             this.game = game;
+            addPoints = new Coins.AddPoints(AddPoints);
         }
 
         public void Load()
@@ -87,13 +93,15 @@ namespace PacMan.Screens
                     walls.Add(new Walls(wall, pos));
                     break;
                 case 'P':
+                    pacmanRespawnPos = pos;
                     pacman = new PacMans(pacSprite, pos );
                     break;
                 case 'G':
+                    ghostRespawnPos = pos;
                     ghosts.Add(new Ghosts(ghost, pos));
                     break;
                 case 'C':
-                    coins.Add(new Coins(coin, wall, new Vector2(pos.X + 15, pos.Y + 15)));
+                    coins.Add(new Coins(coin, new Vector2(pos.X + 15, pos.Y + 15), addPoints));
                     break;
             }
 
@@ -110,14 +118,31 @@ namespace PacMan.Screens
                 {
                     ghostColor = 1;
                 }
-                ghost.Hit(pacman.PosRect, numberOfLives);
+                if (ghost.Hit(pacman.PosRect))
+                {
+                    pacman.Respawn(pacmanRespawnPos);
+                    ghost.Respawn(ghostRespawnPos);
+                    numberOfLives--;
+                } 
             }
+            bool aCoinEaten = true;
             foreach (Coins coin in coins)
             {
                 coin.Hit(pacman.PosRect);
+                if (!coin.Eaten())
+                {
+                    aCoinEaten = false;
+                }
             }
+            allCoinsEaten = aCoinEaten;
             lifeSource();
+            EndGame();
             Console.WriteLine(numberOfLives);
+        }
+
+        public void AddPoints(int points)
+        {
+            GameScreen.points += points;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -162,13 +187,24 @@ namespace PacMan.Screens
 
         private void DrawFonts(SpriteBatch spritebatch)
         {
+            string lives = "Lives: ";
+            string score = "Score: " + points;
             Vector2 livesLen = hudfont.MeasureString(lives);
+            Vector2 scoreLen = hudfont.MeasureString(score);
             spritebatch.DrawString(hudfont, lives, new Vector2(PacManGame.TILE_SIZE, PacManGame.TILE_SIZE * 15 + livesLen.Y / 2), Color.White);
+            spritebatch.DrawString(hudfont, score, new Vector2(PacManGame.TILE_SIZE * 10, PacManGame.TILE_SIZE * 15 + scoreLen.Y / 2), Color.White);
         }
         private Rectangle lifeSource()
         {
             Rectangle lifeSrcRect = new Rectangle(0, 0, life.Width /2 * numberOfLives, life.Height);
             return lifeSrcRect;
+        }
+        private void EndGame()
+        {
+            if (numberOfLives < 0 || allCoinsEaten)
+            {
+                game.SetScreen(PacManGame.GameState.EndScreen);
+            }
         }
     }
 }
